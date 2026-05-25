@@ -62,11 +62,11 @@ export function cosineSimilarity(a: number[], b: number[]): number {
 }
 
 /**
- * Fallback: token-level edit-distance predicate (the v1 implementation).
+ * Fallback: token-level Jaccard predicate (the v1 implementation).
  * Preserved for deployments without embedding infrastructure. Documented in
  * the changelog as the legacy mode.
  */
-export class EditDistanceMergePredicate {
+export class JaccardMergePredicate {
   constructor(private readonly threshold: number = 0.30) {}
 
   async materiallyChanged(pre: string, post: string): Promise<boolean> {
@@ -79,3 +79,9 @@ export class EditDistanceMergePredicate {
     return 1 - jaccardSim >= this.threshold;
   }
 }
+
+/**
+ * @deprecated Renamed to `JaccardMergePredicate` to match its implementation.
+ * Kept as a type alias for backward compatibility with the v1 release.
+ */
+export const EditDistanceMergePredicate = JaccardMergePredicate;

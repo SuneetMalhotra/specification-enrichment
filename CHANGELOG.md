@@ -25,7 +25,7 @@ Initial release. Companion code for the article "Specification Enrichment: Using
 - `providers/openai.ts` and `providers/gemini.ts` — stub providers for cross-model replication (§4.6); throw a clear error pointing at API-key configuration until implemented.
 
 ### Changed
-- `enricher.merge` material-change predicate now uses cosine similarity over sentence embeddings (`similarity.ts`) by default; the prior token-level edit-distance predicate (30% threshold) is preserved as `EditDistanceMergePredicate` for deployments without embedding infrastructure.
+- `enricher.merge` material-change predicate now uses cosine similarity over sentence embeddings (`similarity.ts`) by default; the prior token-level Jaccard predicate (30% threshold) is preserved as `JaccardMergePredicate` (formerly misnamed `EditDistanceMergePredicate`; the old name is kept as a deprecated alias) for deployments without embedding infrastructure.
 
 ### Notes
 - The cosine-similarity ablation table across τ ∈ {0.75, 0.80, 0.85, 0.90} described in §3.3 of the article is TODO pending compute; the regeneration command is in `../audit/protocol.md` §4.

@@ -4,7 +4,7 @@ Reference implementation for the **Specification Enrichment** pipeline pattern.
 
 Companion code for the IEEE Software Practice column article:
 
-> Malhotra, S. "Specification Enrichment: Using LLMs to Surface Implicit Constraints in Design-to-Test Pipelines." *IEEE Software*, 2026 (under review). Preprint: arXiv:2606.NNNNN.
+> Malhotra, S. "Specification Enrichment: Using LLMs to Surface Implicit Constraints in Design-to-Test Pipelines." 2026.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -102,8 +102,7 @@ The harness is deterministic at temperature 0, but model output is not byte-stab
              Constraints in Design-to-Test Pipelines},
   journal = {IEEE Software},
   year    = {2026},
-  note    = {Under review. Preprint on arXiv:2606.NNNNN. Companion code:
-             https://github.com/SuneetMalhotra/specification-enrichment}
+  note    = {Companion code: https://github.com/SuneetMalhotra/specification-enrichment}
 }
 ```
 

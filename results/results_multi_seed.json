@@ -1,0 +1,1505 @@
+{
+  "metadata": {
+    "timestamp": "2026-05-25T21:27:26.477Z",
+    "provider": "anthropic-oauth",
+    "model": "claude-sonnet-4-6",
+    "designId": "todomvc-public-1",
+    "seedsAdded": [
+      2,
+      3
+    ],
+    "note": "Seed 1 numbers are from the original harness runs (results.json, results_baseline16_count_matched.json, results_baseline16_enhanced.json). Seeds 2 and 3 here add two independent runs per configuration so per-category variance can be reported as min/median/max."
+  },
+  "runs": [
+    {
+      "configuration": "Baseline-16",
+      "seed": 2,
+      "testCases": [
+        {
+          "id": "B1",
+          "title": "Add a new todo item",
+          "preconditions": [
+            "Application is loaded",
+            "Todo list is empty"
+          ],
+          "steps": [
+            "Click the input field with placeholder 'What needs to be done?'",
+            "Type 'Buy groceries'",
+            "Press Enter"
+          ],
+          "expected": "A todo item with the label 'Buy groceries' appears in the todo list",
+          "category": "happy-path"
+        },
+        {
+          "id": "B2",
+          "title": "Input field clears after todo is submitted",
+          "preconditions": [
+            "Application is loaded"
+          ],
+          "steps": [
+            "Click the new-todo input field",
+            "Type 'Walk the dog'",
+            "Press Enter"
+          ],
+          "expected": "The new-todo input field is empty after submission",
+          "category": "happy-path"
+        },
+        {
+          "id": "B3",
+          "title": "Footer appears after the first todo is added",
+          "preconditions": [
+            "Application is loaded",
+            "Todo list is empty",
+            "Footer is not visible"
+          ],
+          "steps": [
+            "Type 'First task' in the new-todo input",
+            "Press Enter"
+          ],
+          "expected": "The footer (containing item count, filters, and optionally Clear completed) becomes visible",
+          "category": "edge-case"
+        },
+        {
+          "id": "B4",
+          "title": "Footer is hidden when no todos exist",
+          "preconditions": [
+            "Application is loaded",
+            "Exactly one todo item exists"
+          ],
+          "steps": [
+            "Hover over the single todo item to reveal the destroy button",
+            "Click the destroy button"
+          ],
+          "expected": "The todo list is empty and the footer is no longer visible",
+          "category": "edge-case"
+        },
+        {
+          "id": "B5",
+          "title": "Mark a todo item as complete",
+          "preconditions": [
+            "Application is loaded",
+            "At least one active todo item exists"
+          ],
+          "steps": [
+            "Click the checkbox on an active todo item"
+          ],
+          "expected": "The checkbox becomes checked and the todo item is visually styled as completed",
+          "category": "happy-path"
+        },
+        {
+          "id": "B6",
+          "title": "Items left count decrements when a todo is marked complete",
+          "preconditions": [
+            "Application is loaded",
+            "Two active todo items exist",
+            "Footer shows '2 items left'"
+          ],
+          "steps": [
+            "Click the checkbox on one active todo item"
+          ],
+          "expected": "The footer count changes to '1 item left'",
+          "category": "happy-path"
+        },
+        {
+          "id": "B7",
+          "title": "Unmark a completed todo item",
+          "preconditions": [
+            "Application is loaded",
+            "At least one completed todo item exists"
+          ],
+          "steps": [
+            "Click the checkbox on a completed todo item"
+          ],
+          "expected": "The checkbox becomes unchecked, the item is no longer styled as completed, and the items left count increments by one",
+          "category": "happy-path"
+        },
+        {
+          "id": "B8",
+          "title": "Destroy button is visible only on hover",
+          "preconditions": [
+            "Application is loaded",
+            "At least one todo item exists"
+          ],
+          "steps": [
+            "Observe the todo item without hovering over it",
+            "Move the mouse pointer over the todo item"
+          ],
+          "expected": "The destroy button is not visible before hovering and becomes visible when the mouse is over the todo item",
+          "category": "happy-path"
+        },
+        {
+          "id": "B9",
+          "title": "Delete a todo item using the destroy button",
+          "preconditions": [
+            "Application is loaded",
+            "At least one todo item exists"
+          ],
+          "steps": [
+            "Hover over a todo item to reveal the destroy button",
+            "Click the destroy button"
+          ],
+          "expected": "The todo item is removed from the list and no longer appears",
+          "category": "happy-path"
+        },
+        {
+          "id": "B10",
+          "title": "Submitting an empty input does not add a todo",
+          "preconditions": [
+            "Application is loaded"
+          ],
+          "steps": [
+            "Click the new-todo input field without typing anything",
+            "Press Enter"
+          ],
+          "expected": "No new todo item is added to the list",
+          "category": "error-handling"
+        },
+        {
+          "id": "B11",
+          "title": "Submitting whitespace-only input does not add a todo",
+          "preconditions": [
+            "Application is loaded"
+          ],
+          "steps": [
+            "Click the new-todo input field",
+            "Type '   ' (spaces only)",
+            "Press Enter"
+          ],
+          "expected": "No new todo item is added to the list",
+          "category": "edge-case"
+        },
+        {
+          "id": "B12",
+          "title": "Filter Active shows only active todos",
+          "preconditions": [
+            "Application is loaded",
+            "Two active todos and one completed todo exist"
+          ],
+          "steps": [
+            "Click the 'Active' filter in the footer"
+          ],
+          "expected": "Only the two active (unchecked) todo items are shown; the completed item is hidden",
+          "category": "happy-path"
+        },
+        {
+          "id": "B13",
+          "title": "Filter Completed shows only completed todos",
+          "preconditions": [
+            "Application is loaded",
+            "One active todo and two completed todos exist"
+          ],
+          "steps": [
+            "Click the 'Completed' filter in the footer"
+          ],
+          "expected": "Only the two completed todo items are shown; the active item is hidden",
+          "category": "happy-path"
+        },
+        {
+          "id": "B14",
+          "title": "Filter All shows every todo regardless of state",
+          "preconditions": [
+            "Application is loaded",
+            "Active and completed todos exist",
+            "Completed filter is currently selected"
+          ],
+          "steps": [
+            "Click the 'All' filter in the footer"
+          ],
+          "expected": "All todo items (both active and completed) are displayed in the list",
+          "category": "happy-path"
+        },
+        {
+          "id": "B15",
+          "title": "Clear completed button is hidden when no completed todos exist",
+          "preconditions": [
+            "Application is loaded",
+            "At least one active todo exists",
+            "No completed todos exist"
+          ],
+          "steps": [
+            "Observe the footer"
+          ],
+          "expected": "The 'Clear completed' button is not visible in the footer",
+          "category": "edge-case"
+        },
+        {
+          "id": "B16",
+          "title": "Clear completed removes all completed todos",
+          "preconditions": [
+            "Application is loaded",
+            "Two completed todos and one active todo exist",
+            "Clear completed button is visible"
+          ],
+          "steps": [
+            "Click the 'Clear completed' button in the footer"
+          ],
+          "expected": "Both completed todos are removed from the list; the one active todo remains; the 'Clear completed' button is no longer visible",
+          "category": "happy-path"
+        }
+      ],
+      "categoryCounts": {
+        "happy-path": 11,
+        "edge-case": 4,
+        "error-handling": 1,
+        "accessibility": 0,
+        "persistence": 0,
+        "internationalization": 0,
+        "other": 0
+      }
+    },
+    {
+      "configuration": "Baseline-16-Enhanced",
+      "seed": 2,
+      "testCases": [
+        {
+          "id": "E1",
+          "title": "Add a new todo item via Enter key",
+          "preconditions": [
+            "Application is loaded",
+            "No todos exist"
+          ],
+          "steps": [
+            "Click the '#new-todo' input field",
+            "Type 'Buy groceries'",
+            "Press Enter"
+          ],
+          "expected": "A new todo item labeled 'Buy groceries' appears in the todo list; the footer becomes visible showing '1 item left'.",
+          "category": "happy-path"
+        },
+        {
+          "id": "E2",
+          "title": "Input field clears after todo is submitted",
+          "preconditions": [
+            "Application is loaded"
+          ],
+          "steps": [
+            "Click the '#new-todo' input field",
+            "Type 'Walk the dog'",
+            "Press Enter"
+          ],
+          "expected": "The '#new-todo' input field is empty immediately after submission and its placeholder text 'What needs to be done?' is visible again.",
+          "category": "happy-path"
+        },
+        {
+          "id": "E3",
+          "title": "Mark a todo as complete via its checkbox",
+          "preconditions": [
+            "Application is loaded",
+            "One active todo exists: 'Read a book'"
+          ],
+          "steps": [
+            "Locate the todo item 'Read a book' in the list",
+            "Click its checkbox"
+          ],
+          "expected": "The checkbox becomes checked; 'Read a book' is visually styled as completed (e.g., strikethrough); the items-left count in the footer decreases by 1.",
+          "category": "happy-path"
+        },
+        {
+          "id": "E4",
+          "title": "Delete a todo using the destroy button revealed on hover",
+          "preconditions": [
+            "Application is loaded",
+            "One todo exists: 'Call dentist'"
+          ],
+          "steps": [
+            "Move the mouse cursor over the todo item 'Call dentist' to reveal the destroy button",
+            "Click the destroy button"
+          ],
+          "expected": "'Call dentist' is removed from the list; because no todos remain, the footer is hidden.",
+          "category": "happy-path"
+        },
+        {
+          "id": "E5",
+          "title": "Filter 'Active' shows only incomplete todos",
+          "preconditions": [
+            "Application is loaded",
+            "Two todos exist: 'Pay bills' (active) and 'Send email' (completed)"
+          ],
+          "steps": [
+            "Click the 'Active' filter button in the footer"
+          ],
+          "expected": "Only 'Pay bills' is visible in the list; 'Send email' is not rendered; the 'Active' filter button appears selected/highlighted.",
+          "category": "happy-path"
+        },
+        {
+          "id": "E6",
+          "title": "Filter 'Completed' shows only completed todos",
+          "preconditions": [
+            "Application is loaded",
+            "Two todos exist: 'Pay bills' (active) and 'Send email' (completed)"
+          ],
+          "steps": [
+            "Click the 'Completed' filter button in the footer"
+          ],
+          "expected": "Only 'Send email' is visible in the list; 'Pay bills' is not rendered; the 'Completed' filter button appears selected/highlighted.",
+          "category": "happy-path"
+        },
+        {
+          "id": "E7",
+          "title": "Filter 'All' restores both active and completed todos",
+          "preconditions": [
+            "Application is loaded",
+            "Two todos exist: 'Pay bills' (active) and 'Send email' (completed)",
+            "The 'Active' filter is currently selected"
+          ],
+          "steps": [
+            "Click the 'All' filter button in the footer"
+          ],
+          "expected": "Both 'Pay bills' and 'Send email' are visible in the list; the 'All' filter button appears selected/highlighted.",
+          "category": "happy-path"
+        },
+        {
+          "id": "E8",
+          "title": "Items-left count reflects only active (incomplete) todos",
+          "preconditions": [
+            "Application is loaded",
+            "Three todos exist: 'Task A' (active), 'Task B' (active), 'Task C' (completed)"
+          ],
+          "steps": [
+            "Observe the items-left counter in the footer"
+          ],
+          "expected": "The footer displays '2 items left', counting only the two active todos and excluding the completed one.",
+          "category": "happy-path"
+        },
+        {
+          "id": "E9",
+          "title": "Clear completed removes all completed todos in one action",
+          "preconditions": [
+            "Application is loaded",
+            "Three todos exist: 'Alpha' (active), 'Beta' (completed), 'Gamma' (completed)"
+          ],
+          "steps": [
+            "Click the 'Clear completed' button in the footer"
+          ],
+          "expected": "'Beta' and 'Gamma' are removed; 'Alpha' remains; the items-left count shows '1 item left'; the 'Clear completed' button is no longer visible.",
+          "category": "happy-path"
+        },
+        {
+          "id": "E10",
+          "title": "Footer is hidden when no todos exist",
+          "preconditions": [
+            "Application is loaded",
+            "No todos exist"
+          ],
+          "steps": [
+            "Observe the page without adding any todos"
+          ],
+          "expected": "The footer element—including the items-left count, all filter buttons, and the clear-completed button—is not visible anywhere on the page.",
+          "category": "edge-case"
+        },
+        {
+          "id": "E11",
+          "title": "'Clear completed' button is absent when no todos are completed",
+          "preconditions": [
+            "Application is loaded",
+            "Two active (incomplete) todos exist",
+            "No completed todos exist"
+          ],
+          "steps": [
+            "Observe the footer"
+          ],
+          "expected": "The footer is visible (todos exist), but the 'Clear completed' button is not present in it.",
+          "category": "edge-case"
+        },
+        {
+          "id": "E12",
+          "title": "Unchecking a completed todo restores it to active",
+          "preconditions": [
+            "Application is loaded",
+            "Exactly one completed todo exists: 'Exercise'"
+          ],
+          "steps": [
+            "Click the checked checkbox next to 'Exercise'"
+          ],
+          "expected": "The checkbox becomes unchecked; 'Exercise' loses its completed visual styling; the items-left count increases by 1; the 'Clear completed' button disappears because no completed todos remain.",
+          "category": "edge-case"
+        },
+        {
+          "id": "E13",
+          "title": "Submitting empty or whitespace-only input does not create a todo",
+          "preconditions": [
+            "Application is loaded",
+            "No todos exist"
+          ],
+          "steps": [
+            "Click the '#new-todo' input field and press Enter without typing",
+            "Type three space characters into '#new-todo' and press Enter"
+          ],
+          "expected": "No todo item is added to the list after either attempt; the list remains empty and the footer remains hidden.",
+          "category": "error-handling"
+        },
+        {
+          "id": "E14",
+          "title": "All interactive controls are reachable and operable via keyboard alone",
+          "preconditions": [
+            "Application is loaded",
+            "Two todos exist: one active, one completed"
+          ],
+          "steps": [
+            "Focus the browser window without using a mouse",
+            "Press Tab repeatedly to move focus through: the '#new-todo' input, the todo checkboxes, and the footer filter buttons ('All', 'Active', 'Completed')",
+            "When a checkbox has focus, press Space to toggle it",
+            "When a filter button has focus, press Enter or Space to activate it"
+          ],
+          "expected": "Every interactive element receives a visible focus indicator in a logical top-to-bottom order; checkboxes toggle their state on Space; filter buttons change the active filter on Enter/Space; no interactive control is unreachable by keyboard.",
+          "category": "accessibility"
+        },
+        {
+          "id": "E15",
+          "title": "Todos and their completion state survive a browser page refresh",
+          "preconditions": [
+            "Application is loaded",
+            "Two todos exist: 'Morning run' (active) and 'Meditate' (completed)"
+          ],
+          "steps": [
+            "Reload the page using the browser refresh control or F5",
+            "Observe the todo list after the page finishes loading"
+          ],
+          "expected": "Both 'Morning run' (active/unchecked) and 'Meditate' (completed/checked with completed styling) are present with their original completion states intact after reload.",
+          "category": "persistence"
+        },
+        {
+          "id": "E16",
+          "title": "Todo text containing right-to-left Arabic characters is stored and displayed correctly",
+          "preconditions": [
+            "Application is loaded"
+          ],
+          "steps": [
+            "Click the '#new-todo' input field",
+            "Type or paste the Arabic string 'اشتري الخبز'",
+            "Press Enter",
+            "Observe the resulting todo item label"
+          ],
+          "expected": "The todo item is created and its label renders 'اشتري الخبز' without character corruption, truncation, or reversed glyph ordering; the text is legible and consistent with right-to-left Arabic script conventions.",
+          "category": "other"
+        }
+      ],
+      "categoryCounts": {
+        "happy-path": 9,
+        "edge-case": 3,
+        "error-handling": 1,
+        "accessibility": 1,
+        "persistence": 1,
+        "internationalization": 0,
+        "other": 1
+      }
+    },
+    {
+      "configuration": "Enriched-16",
+      "seed": 2,
+      "testCases": [
+        {
+          "id": "E1",
+          "title": "Add a new todo item via Enter key",
+          "preconditions": [
+            "App is loaded",
+            "Todo list is empty"
+          ],
+          "steps": [
+            "Click the new-todo input field",
+            "Type 'Buy groceries'",
+            "Press Enter"
+          ],
+          "expected": "'Buy groceries' appears as the sole item in the todo list; the new-todo input is cleared and focused; the footer becomes visible showing '1 item left'",
+          "category": "happy-path"
+        },
+        {
+          "id": "E2",
+          "title": "Mark an active todo as complete via checkbox",
+          "preconditions": [
+            "App is loaded",
+            "One active todo 'Buy groceries' exists"
+          ],
+          "steps": [
+            "Click the checkbox to the left of 'Buy groceries'"
+          ],
+          "expected": "The checkbox becomes checked; 'Buy groceries' is rendered with a completed visual style (e.g., strikethrough); the footer count changes to '0 items left'",
+          "category": "happy-path"
+        },
+        {
+          "id": "E3",
+          "title": "Delete a todo via the destroy button on hover",
+          "preconditions": [
+            "App is loaded",
+            "One active todo 'Buy groceries' exists"
+          ],
+          "steps": [
+            "Hover the mouse cursor over the 'Buy groceries' list item",
+            "Click the destroy button (×) that appears"
+          ],
+          "expected": "'Buy groceries' is removed from the list; the todo list is empty; the footer is no longer visible",
+          "category": "happy-path"
+        },
+        {
+          "id": "E4",
+          "title": "Filter by Active shows only non-completed todos",
+          "preconditions": [
+            "App is loaded",
+            "Active todo 'Buy groceries' exists",
+            "Completed todo 'Call dentist' exists"
+          ],
+          "steps": [
+            "Click the 'Active' filter button in the footer"
+          ],
+          "expected": "Only 'Buy groceries' is visible in the list; 'Call dentist' is not rendered; the 'Active' filter button appears in a selected/highlighted state",
+          "category": "happy-path"
+        },
+        {
+          "id": "E5",
+          "title": "Filter by Completed shows only completed todos",
+          "preconditions": [
+            "App is loaded",
+            "Active todo 'Buy groceries' exists",
+            "Completed todo 'Call dentist' exists"
+          ],
+          "steps": [
+            "Click the 'Completed' filter button in the footer"
+          ],
+          "expected": "Only 'Call dentist' is visible in the list; 'Buy groceries' is not rendered; the 'Completed' filter button appears in a selected/highlighted state",
+          "category": "happy-path"
+        },
+        {
+          "id": "E6",
+          "title": "Clear completed removes all completed todos and leaves active todos intact",
+          "preconditions": [
+            "App is loaded",
+            "Active todo 'Buy groceries' exists",
+            "Completed todo 'Call dentist' exists"
+          ],
+          "steps": [
+            "Click the 'Clear completed' button in the footer"
+          ],
+          "expected": "'Call dentist' is removed from the list; 'Buy groceries' remains visible; the footer count still reads '1 item left'; the 'Clear completed' button is no longer visible",
+          "category": "happy-path"
+        },
+        {
+          "id": "E7",
+          "title": "Empty input does not create a todo",
+          "preconditions": [
+            "App is loaded",
+            "Todo list is empty"
+          ],
+          "steps": [
+            "Click the new-todo input field",
+            "Press Enter without typing any text"
+          ],
+          "expected": "No todo item is added to the list; the footer remains hidden; the new-todo input remains empty",
+          "category": "edge-case"
+        },
+        {
+          "id": "E8",
+          "title": "Whitespace-only input does not create a todo",
+          "preconditions": [
+            "App is loaded",
+            "Todo list is empty"
+          ],
+          "steps": [
+            "Click the new-todo input field",
+            "Type four space characters",
+            "Press Enter"
+          ],
+          "expected": "No todo item is added to the list; the footer remains hidden; the new-todo input is empty or cleared",
+          "category": "edge-case"
+        },
+        {
+          "id": "E9",
+          "title": "Footer item count reflects only active todos, not total todos",
+          "preconditions": [
+            "App is loaded"
+          ],
+          "steps": [
+            "Add three todos: 'Task A', 'Task B', 'Task C'",
+            "Mark 'Task A' and 'Task B' as completed"
+          ],
+          "expected": "The footer count reads '1 item left', not '3 items left' or '2 items left'; the count corresponds exclusively to the one remaining active todo",
+          "category": "edge-case"
+        },
+        {
+          "id": "E10",
+          "title": "Footer is not visible when the todo list is empty",
+          "preconditions": [
+            "App is loaded with no existing todos"
+          ],
+          "steps": [
+            "Observe the page without adding any todos"
+          ],
+          "expected": "The footer element (item count, filter buttons, and clear-completed button) is not rendered or is hidden; only the header and new-todo input are visible",
+          "category": "edge-case"
+        },
+        {
+          "id": "E11",
+          "title": "Clear completed button is hidden when no completed todos exist",
+          "preconditions": [
+            "App is loaded",
+            "Two active todos 'Task A' and 'Task B' exist",
+            "No completed todos exist"
+          ],
+          "steps": [
+            "Observe the footer"
+          ],
+          "expected": "The 'Clear completed' button is not rendered or not visible in the footer; the item count and filter buttons are visible",
+          "category": "edge-case"
+        },
+        {
+          "id": "E12",
+          "title": "Item count uses singular form when exactly one active todo remains",
+          "preconditions": [
+            "App is loaded"
+          ],
+          "steps": [
+            "Add two todos: 'Task A' and 'Task B'",
+            "Mark 'Task B' as completed"
+          ],
+          "expected": "The footer displays exactly '1 item left' using the singular word 'item', not '1 items left'",
+          "category": "edge-case"
+        },
+        {
+          "id": "E13",
+          "title": "Item count uses plural form when more than one active todo remains",
+          "preconditions": [
+            "App is loaded"
+          ],
+          "steps": [
+            "Add three todos: 'Task A', 'Task B', 'Task C'",
+            "Mark 'Task C' as completed"
+          ],
+          "expected": "The footer displays exactly '2 items left' using the plural word 'items', not '2 item left'",
+          "category": "edge-case"
+        },
+        {
+          "id": "E14",
+          "title": "Clear completed fires immediately with no confirmation dialog",
+          "preconditions": [
+            "App is loaded",
+            "Completed todo 'Call dentist' exists",
+            "Completed todo 'Read book' exists"
+          ],
+          "steps": [
+            "Click the 'Clear completed' button",
+            "Observe whether any modal, dialog, or confirmation prompt appears"
+          ],
+          "expected": "Both 'Call dentist' and 'Read book' are removed from the list immediately upon click; no confirmation dialog, modal, or prompt of any kind is shown at any point during or after the click",
+          "category": "error-handling"
+        },
+        {
+          "id": "E15",
+          "title": "All filter is selected by default on initial page load",
+          "preconditions": [
+            "App is freshly loaded with no prior interaction"
+          ],
+          "steps": [
+            "Add one todo 'Task A' so that the footer becomes visible",
+            "Observe the state of the filter buttons"
+          ],
+          "expected": "The 'All' filter button is rendered in a selected/active visual state; 'Active' and 'Completed' filter buttons are unselected; all existing todos are shown in the list",
+          "category": "other"
+        },
+        {
+          "id": "E16",
+          "title": "New todos are appended to the bottom of the list in creation order",
+          "preconditions": [
+            "App is loaded",
+            "Todo list is empty"
+          ],
+          "steps": [
+            "Add todo 'First task' and press Enter",
+            "Add todo 'Second task' and press Enter",
+            "Add todo 'Third task' and press Enter"
+          ],
+          "expected": "'First task' appears at position 1, 'Second task' at position 2, and 'Third task' at position 3; no reordering occurs; each new item is placed below all existing items",
+          "category": "other"
+        }
+      ],
+      "categoryCounts": {
+        "happy-path": 6,
+        "edge-case": 7,
+        "error-handling": 1,
+        "accessibility": 0,
+        "persistence": 0,
+        "internationalization": 0,
+        "other": 2
+      }
+    },
+    {
+      "configuration": "Baseline-16",
+      "seed": 3,
+      "testCases": [
+        {
+          "id": "B1",
+          "title": "Add a new todo item",
+          "preconditions": [
+            "Application is loaded",
+            "Todo list is empty"
+          ],
+          "steps": [
+            "Click the input field with placeholder 'What needs to be done?'",
+            "Type 'Buy groceries'",
+            "Press Enter"
+          ],
+          "expected": "A new todo item with text 'Buy groceries' appears in the list; the input field is cleared; the footer appears showing '1 items left'.",
+          "category": "happy-path"
+        },
+        {
+          "id": "B2",
+          "title": "Add multiple todo items",
+          "preconditions": [
+            "Application is loaded",
+            "Todo list is empty"
+          ],
+          "steps": [
+            "Type 'First task' in the input and press Enter",
+            "Type 'Second task' in the input and press Enter",
+            "Type 'Third task' in the input and press Enter"
+          ],
+          "expected": "Three items appear in the list in insertion order; footer shows '3 items left'; input field is empty after each submission.",
+          "category": "happy-path"
+        },
+        {
+          "id": "B3",
+          "title": "Mark a todo item as complete",
+          "preconditions": [
+            "Application is loaded",
+            "At least one active todo item exists"
+          ],
+          "steps": [
+            "Click the checkbox next to an active todo item"
+          ],
+          "expected": "The checkbox becomes checked; the item's text appears visually distinguished (e.g., strikethrough); the 'items left' count decreases by 1; 'Clear completed' button becomes visible.",
+          "category": "happy-path"
+        },
+        {
+          "id": "B4",
+          "title": "Unmark a completed todo item",
+          "preconditions": [
+            "Application is loaded",
+            "At least one completed todo item exists"
+          ],
+          "steps": [
+            "Click the checked checkbox next to a completed todo item"
+          ],
+          "expected": "The checkbox becomes unchecked; the item's completed styling is removed; the 'items left' count increases by 1.",
+          "category": "happy-path"
+        },
+        {
+          "id": "B5",
+          "title": "Delete a todo item via destroy button",
+          "preconditions": [
+            "Application is loaded",
+            "At least one todo item exists"
+          ],
+          "steps": [
+            "Hover the mouse over a todo item",
+            "Click the destroy button that appears"
+          ],
+          "expected": "The todo item is removed from the list; the 'items left' count decreases by 1 (if item was active); if no todos remain, the footer is hidden.",
+          "category": "happy-path"
+        },
+        {
+          "id": "B6",
+          "title": "Filter by Active shows only uncompleted todos",
+          "preconditions": [
+            "Application is loaded",
+            "At least one active and one completed todo exist"
+          ],
+          "steps": [
+            "Click the 'Active' filter in the footer"
+          ],
+          "expected": "Only uncompleted (active) todo items are displayed; completed items are hidden; 'Active' filter appears selected/highlighted.",
+          "category": "happy-path"
+        },
+        {
+          "id": "B7",
+          "title": "Filter by Completed shows only completed todos",
+          "preconditions": [
+            "Application is loaded",
+            "At least one active and one completed todo exist"
+          ],
+          "steps": [
+            "Click the 'Completed' filter in the footer"
+          ],
+          "expected": "Only completed todo items are displayed; active items are hidden; 'Completed' filter appears selected/highlighted.",
+          "category": "happy-path"
+        },
+        {
+          "id": "B8",
+          "title": "Filter All restores full list",
+          "preconditions": [
+            "Application is loaded",
+            "Active filter is set to 'Completed'",
+            "At least one active and one completed todo exist"
+          ],
+          "steps": [
+            "Click the 'All' filter in the footer"
+          ],
+          "expected": "All todo items (active and completed) are displayed; 'All' filter appears selected/highlighted.",
+          "category": "happy-path"
+        },
+        {
+          "id": "B9",
+          "title": "Clear completed removes all completed todos",
+          "preconditions": [
+            "Application is loaded",
+            "At least two completed and one active todo exist"
+          ],
+          "steps": [
+            "Click the 'Clear completed' button in the footer"
+          ],
+          "expected": "All completed items are removed from the list; active items remain; 'Clear completed' button disappears; 'items left' count reflects only remaining active todos.",
+          "category": "happy-path"
+        },
+        {
+          "id": "B10",
+          "title": "Footer hidden when no todos exist",
+          "preconditions": [
+            "Application is loaded",
+            "Todo list is empty"
+          ],
+          "steps": [
+            "Observe the page without adding any todos"
+          ],
+          "expected": "The footer (item count, filters, clear-completed) is not visible on the page.",
+          "category": "edge-case"
+        },
+        {
+          "id": "B11",
+          "title": "Submitting empty input does not create a todo",
+          "preconditions": [
+            "Application is loaded"
+          ],
+          "steps": [
+            "Click the new-todo input field",
+            "Press Enter without typing any text"
+          ],
+          "expected": "No new todo item is added to the list; the list and footer state remain unchanged.",
+          "category": "error-handling"
+        },
+        {
+          "id": "B12",
+          "title": "Submitting whitespace-only input does not create a todo",
+          "preconditions": [
+            "Application is loaded"
+          ],
+          "steps": [
+            "Click the new-todo input field",
+            "Type '   ' (spaces only)",
+            "Press Enter"
+          ],
+          "expected": "No new todo item is added to the list; the input is cleared or remains empty; the list and footer state remain unchanged.",
+          "category": "error-handling"
+        },
+        {
+          "id": "B13",
+          "title": "Destroy button is hidden until hover",
+          "preconditions": [
+            "Application is loaded",
+            "At least one todo item exists"
+          ],
+          "steps": [
+            "Observe a todo item without hovering over it",
+            "Move the mouse pointer over the todo item"
+          ],
+          "expected": "The destroy button is not visible before hover; the destroy button becomes visible when the mouse is over the todo item.",
+          "category": "other"
+        },
+        {
+          "id": "B14",
+          "title": "Item count uses correct singular/plural wording",
+          "preconditions": [
+            "Application is loaded",
+            "Todo list is empty"
+          ],
+          "steps": [
+            "Add one todo item and observe the footer count",
+            "Add a second todo item and observe the footer count"
+          ],
+          "expected": "With one active item the footer displays '1 item left'; with two active items it displays '2 items left'.",
+          "category": "edge-case"
+        },
+        {
+          "id": "B15",
+          "title": "Clear completed button hidden when no completed todos exist",
+          "preconditions": [
+            "Application is loaded",
+            "At least one active todo exists and zero completed todos exist"
+          ],
+          "steps": [
+            "Observe the footer"
+          ],
+          "expected": "The 'Clear completed' button is not visible in the footer.",
+          "category": "edge-case"
+        },
+        {
+          "id": "B16",
+          "title": "New-todo input is keyboard accessible and focusable",
+          "preconditions": [
+            "Application is loaded"
+          ],
+          "steps": [
+            "Load the page",
+            "Press Tab until the new-todo input is focused (or verify it is auto-focused on load)",
+            "Type 'Accessible task' and press Enter"
+          ],
+          "expected": "The new-todo input is reachable via keyboard navigation; a new todo 'Accessible task' is created successfully without requiring mouse interaction.",
+          "category": "accessibility"
+        }
+      ],
+      "categoryCounts": {
+        "happy-path": 9,
+        "edge-case": 3,
+        "error-handling": 2,
+        "accessibility": 1,
+        "persistence": 0,
+        "internationalization": 0,
+        "other": 1
+      }
+    },
+    {
+      "configuration": "Baseline-16-Enhanced",
+      "seed": 3,
+      "testCases": [
+        {
+          "id": "E1",
+          "title": "Add a new todo via Enter key",
+          "preconditions": [
+            "Application is loaded",
+            "Todo list is empty"
+          ],
+          "steps": [
+            "Click the '#new-todo' input field",
+            "Type 'Buy groceries'",
+            "Press the Enter key"
+          ],
+          "expected": "A todo item with label 'Buy groceries' appears in the todo list; the '#new-todo' input field is cleared and focused",
+          "category": "happy-path"
+        },
+        {
+          "id": "E2",
+          "title": "Footer appears when first todo is added",
+          "preconditions": [
+            "Application is loaded",
+            "Todo list is empty",
+            "Footer is not visible"
+          ],
+          "steps": [
+            "Type 'First task' in '#new-todo'",
+            "Press Enter"
+          ],
+          "expected": "The footer element becomes visible and displays '1 item left', the All/Active/Completed filter buttons, and no 'Clear completed' button",
+          "category": "happy-path"
+        },
+        {
+          "id": "E3",
+          "title": "Mark a todo as complete via checkbox",
+          "preconditions": [
+            "At least one active todo exists"
+          ],
+          "steps": [
+            "Locate an active (unchecked) todo item",
+            "Click its checkbox"
+          ],
+          "expected": "The checkbox becomes checked, the todo label receives completed visual styling (e.g., strikethrough), and the footer 'items left' count decrements by 1",
+          "category": "happy-path"
+        },
+        {
+          "id": "E4",
+          "title": "Unmark a completed todo as active",
+          "preconditions": [
+            "At least one completed todo exists"
+          ],
+          "steps": [
+            "Locate a completed (checked) todo item",
+            "Click its checkbox to uncheck it"
+          ],
+          "expected": "The checkbox becomes unchecked, completed visual styling is removed from the label, and the footer 'items left' count increments by 1",
+          "category": "happy-path"
+        },
+        {
+          "id": "E5",
+          "title": "Delete a todo using the destroy button",
+          "preconditions": [
+            "At least one todo exists"
+          ],
+          "steps": [
+            "Hover the mouse cursor over a todo item",
+            "Click the destroy button that appears on hover"
+          ],
+          "expected": "The todo item is removed from the list and does not reappear; the footer count updates accordingly",
+          "category": "happy-path"
+        },
+        {
+          "id": "E6",
+          "title": "Filter list to show only Active todos",
+          "preconditions": [
+            "At least one active todo and at least one completed todo exist"
+          ],
+          "steps": [
+            "Click the 'Active' filter button in the footer"
+          ],
+          "expected": "Only active (unchecked) todos are displayed; completed todos are hidden; the 'Active' filter button appears selected",
+          "category": "happy-path"
+        },
+        {
+          "id": "E7",
+          "title": "Filter list to show only Completed todos",
+          "preconditions": [
+            "At least one active todo and at least one completed todo exist"
+          ],
+          "steps": [
+            "Click the 'Completed' filter button in the footer"
+          ],
+          "expected": "Only completed (checked) todos are displayed; active todos are hidden; the 'Completed' filter button appears selected",
+          "category": "happy-path"
+        },
+        {
+          "id": "E8",
+          "title": "Filter All restores full list view",
+          "preconditions": [
+            "Active filter is set to 'Completed' or 'Active'",
+            "Both active and completed todos exist"
+          ],
+          "steps": [
+            "Click the 'All' filter button in the footer"
+          ],
+          "expected": "Both active and completed todos are visible in the list; the 'All' filter button appears selected",
+          "category": "happy-path"
+        },
+        {
+          "id": "E9",
+          "title": "Clear completed removes all completed todos",
+          "preconditions": [
+            "At least one completed todo and at least one active todo exist"
+          ],
+          "steps": [
+            "Verify the 'Clear completed' button is visible",
+            "Click the 'Clear completed' button"
+          ],
+          "expected": "All completed todos are removed from the list; active todos remain; the 'Clear completed' button disappears; footer count reflects only active todos",
+          "category": "happy-path"
+        },
+        {
+          "id": "E10",
+          "title": "Footer hides when the last todo is deleted",
+          "preconditions": [
+            "Exactly one todo exists in the list"
+          ],
+          "steps": [
+            "Hover over the single todo item",
+            "Click its destroy button"
+          ],
+          "expected": "The todo is removed, the list is empty, and the footer (count, filters, clear button) is no longer visible",
+          "category": "edge-case"
+        },
+        {
+          "id": "E11",
+          "title": "Clear completed button is hidden when no completed todos exist",
+          "preconditions": [
+            "At least one active todo exists",
+            "No completed todos exist"
+          ],
+          "steps": [
+            "Observe the footer"
+          ],
+          "expected": "The 'Clear completed' button is not present or not visible in the footer",
+          "category": "edge-case"
+        },
+        {
+          "id": "E12",
+          "title": "Adding a todo while Active filter is active keeps filter consistent",
+          "preconditions": [
+            "Active filter is set to 'Active'",
+            "At least one active todo exists"
+          ],
+          "steps": [
+            "Type 'New active task' in '#new-todo'",
+            "Press Enter"
+          ],
+          "expected": "The new todo appears in the list (because it is active and the Active filter is selected); the footer count increments by 1",
+          "category": "edge-case"
+        },
+        {
+          "id": "E13",
+          "title": "Submitting an empty input does not create a todo",
+          "preconditions": [
+            "Application is loaded"
+          ],
+          "steps": [
+            "Click the '#new-todo' input field ensuring it is empty",
+            "Press the Enter key"
+          ],
+          "expected": "No todo item is added to the list; the footer remains hidden if the list was previously empty; the input remains empty",
+          "category": "error-handling"
+        },
+        {
+          "id": "E14",
+          "title": "Submitting a whitespace-only input does not create a todo",
+          "preconditions": [
+            "Application is loaded"
+          ],
+          "steps": [
+            "Click the '#new-todo' input field",
+            "Type '     ' (five space characters)",
+            "Press the Enter key"
+          ],
+          "expected": "No todo item is added to the list; the footer remains hidden if the list was empty; the input is cleared",
+          "category": "error-handling"
+        },
+        {
+          "id": "E15",
+          "title": "Todo list state persists after browser page refresh",
+          "preconditions": [
+            "At least one active todo and one completed todo exist"
+          ],
+          "steps": [
+            "Note the current todo items and their completion states",
+            "Reload the page (F5 or browser refresh)"
+          ],
+          "expected": "After reload, the same todo items appear with the same completion states; the footer count is accurate",
+          "category": "persistence"
+        },
+        {
+          "id": "E16",
+          "title": "Filter buttons are keyboard-navigable and operable",
+          "preconditions": [
+            "At least one todo exists so the footer is visible"
+          ],
+          "steps": [
+            "Place keyboard focus on the 'All' filter button using the Tab key",
+            "Press Tab to move focus to the 'Active' filter button",
+            "Press Enter or Space to activate it",
+            "Press Tab to move focus to the 'Completed' filter button",
+            "Press Enter or Space to activate it"
+          ],
+          "expected": "Focus moves visibly between filter buttons; activating 'Active' via keyboard filters the list to active todos; activating 'Completed' via keyboard filters to completed todos; no mouse interaction is required at any step",
+          "category": "accessibility"
+        }
+      ],
+      "categoryCounts": {
+        "happy-path": 9,
+        "edge-case": 3,
+        "error-handling": 2,
+        "accessibility": 1,
+        "persistence": 1,
+        "internationalization": 0,
+        "other": 0
+      }
+    },
+    {
+      "configuration": "Enriched-16",
+      "seed": 3,
+      "testCases": [
+        {
+          "id": "E1",
+          "title": "Add a new todo via Enter key",
+          "preconditions": [
+            "The app is loaded and the todo list is empty"
+          ],
+          "steps": [
+            "Click the '#new-todo' input field",
+            "Type 'Buy groceries'",
+            "Press Enter"
+          ],
+          "expected": "A todo item with the label 'Buy groceries' appears in the list; the '#new-todo' input is cleared; the footer becomes visible showing '1 item left'",
+          "category": "happy-path"
+        },
+        {
+          "id": "E2",
+          "title": "Mark an active todo as complete via checkbox",
+          "preconditions": [
+            "One active todo 'Buy groceries' exists in the list"
+          ],
+          "steps": [
+            "Click the checkbox to the left of 'Buy groceries'"
+          ],
+          "expected": "The todo item is visually marked as completed (e.g., strikethrough text); the 'N items left' count decreases by 1 to '0 items left'; the 'Clear completed' button becomes visible",
+          "category": "happy-path"
+        },
+        {
+          "id": "E3",
+          "title": "Delete a todo using the destroy button on hover",
+          "preconditions": [
+            "One active todo 'Buy groceries' exists in the list"
+          ],
+          "steps": [
+            "Hover the mouse over the 'Buy groceries' todo item",
+            "Click the destroy button (×) that appears on hover"
+          ],
+          "expected": "The 'Buy groceries' todo is removed from the list; when it was the only todo, the footer is no longer visible",
+          "category": "happy-path"
+        },
+        {
+          "id": "E4",
+          "title": "Pressing Enter on an empty input does not create a todo",
+          "preconditions": [
+            "The app is loaded; '#new-todo' input is empty"
+          ],
+          "steps": [
+            "Click the '#new-todo' input field",
+            "Press Enter without typing anything"
+          ],
+          "expected": "No todo is added to the list; the list and footer remain unchanged; the input remains focused and empty",
+          "category": "error-handling"
+        },
+        {
+          "id": "E5",
+          "title": "Pressing Enter on a whitespace-only input does not create a todo",
+          "preconditions": [
+            "The app is loaded; '#new-todo' input is empty"
+          ],
+          "steps": [
+            "Click the '#new-todo' input field",
+            "Type '   ' (three spaces)",
+            "Press Enter"
+          ],
+          "expected": "No todo is added to the list; the input is cleared or remains as-is but no item appears; the footer state is unchanged",
+          "category": "error-handling"
+        },
+        {
+          "id": "E6",
+          "title": "'N items left' counter reflects only active todos, not total",
+          "preconditions": [
+            "The app is loaded and the todo list is empty"
+          ],
+          "steps": [
+            "Add three todos: 'Task A', 'Task B', 'Task C'",
+            "Mark 'Task A' as complete by clicking its checkbox",
+            "Observe the items-left counter"
+          ],
+          "expected": "The counter displays '2 items left', not '3 items left', confirming it counts only active (incomplete) todos",
+          "category": "edge-case"
+        },
+        {
+          "id": "E7",
+          "title": "Leading and trailing whitespace is trimmed from saved todo text",
+          "preconditions": [
+            "The app is loaded and the todo list is empty"
+          ],
+          "steps": [
+            "Click the '#new-todo' input field",
+            "Type '  Walk the dog  ' (two leading and two trailing spaces)",
+            "Press Enter"
+          ],
+          "expected": "The todo appears in the list with the label 'Walk the dog' (no surrounding spaces); the stored/displayed text is trimmed",
+          "category": "other"
+        },
+        {
+          "id": "E8",
+          "title": "Items-left counter uses singular 'item' for exactly one active todo",
+          "preconditions": [
+            "The app is loaded and the todo list is empty"
+          ],
+          "steps": [
+            "Add two todos: 'Task A' and 'Task B'",
+            "Verify the counter reads '2 items left'",
+            "Mark 'Task A' as complete",
+            "Observe the items-left counter"
+          ],
+          "expected": "The counter displays '1 item left' (singular) when exactly one active todo remains, and '2 items left' (plural) when two are active",
+          "category": "edge-case"
+        },
+        {
+          "id": "E9",
+          "title": "Todo list state persists across a full page reload",
+          "preconditions": [
+            "The app is loaded and the todo list is empty"
+          ],
+          "steps": [
+            "Add two todos: 'Persist me' and 'Also persist'",
+            "Mark 'Persist me' as complete",
+            "Reload the page (F5 or browser refresh)"
+          ],
+          "expected": "After reload, both todos are still present; 'Persist me' is still shown as completed; '1 item left' is still displayed, confirming client-side persistence (e.g., localStorage)",
+          "category": "persistence"
+        },
+        {
+          "id": "E10",
+          "title": "Clear Completed removes all completed todos immediately without a confirmation dialog",
+          "preconditions": [
+            "Two todos exist: 'Task A' (completed) and 'Task B' (active)"
+          ],
+          "steps": [
+            "Click the 'Clear completed' button"
+          ],
+          "expected": "No confirmation dialog appears; 'Task A' is immediately removed from the list; 'Task B' remains; '1 item left' is displayed; 'Clear completed' button is no longer visible",
+          "category": "edge-case"
+        },
+        {
+          "id": "E11",
+          "title": "Active filter shows only incomplete todos",
+          "preconditions": [
+            "Three todos exist: 'Task A' (completed), 'Task B' (active), 'Task C' (active)"
+          ],
+          "steps": [
+            "Click the 'Active' filter link in the footer"
+          ],
+          "expected": "Only 'Task B' and 'Task C' are visible in the list; 'Task A' is hidden; the 'Active' filter link appears selected/highlighted; the items-left count remains '2 items left'",
+          "category": "happy-path"
+        },
+        {
+          "id": "E12",
+          "title": "Completed filter shows only completed todos",
+          "preconditions": [
+            "Three todos exist: 'Task A' (completed), 'Task B' (active), 'Task C' (active)"
+          ],
+          "steps": [
+            "Click the 'Completed' filter link in the footer"
+          ],
+          "expected": "Only 'Task A' is visible in the list; 'Task B' and 'Task C' are hidden; the 'Completed' filter link appears selected/highlighted; the items-left count remains '2 items left'",
+          "category": "happy-path"
+        },
+        {
+          "id": "E13",
+          "title": "Footer is hidden when no todos exist",
+          "preconditions": [
+            "The app is loaded and the todo list is empty"
+          ],
+          "steps": [
+            "Observe the page without adding any todos"
+          ],
+          "expected": "The footer element (containing the items-left counter, filter links, and Clear completed button) is not visible or not present in the DOM",
+          "category": "edge-case"
+        },
+        {
+          "id": "E14",
+          "title": "'Clear completed' button is hidden when no completed todos exist",
+          "preconditions": [
+            "Two active (incomplete) todos exist in the list"
+          ],
+          "steps": [
+            "Observe the footer without completing any todo"
+          ],
+          "expected": "The footer is visible (showing the items-left counter and filter links), but the 'Clear completed' button is not visible or absent from the DOM",
+          "category": "edge-case"
+        },
+        {
+          "id": "E15",
+          "title": "Core interactive elements are reachable and operable via keyboard alone",
+          "preconditions": [
+            "The app is loaded with one active todo 'Task A'"
+          ],
+          "steps": [
+            "Press Tab from the page start until the '#new-todo' input is focused",
+            "Type 'Task B' and press Enter to add a todo",
+            "Press Tab to move focus to the first todo's checkbox",
+            "Press Space to mark 'Task A' as complete",
+            "Tab to the 'Clear completed' button and press Enter"
+          ],
+          "expected": "Each interactive element receives visible focus in a logical order; adding a todo, toggling completion, and clearing completed all function correctly without mouse interaction",
+          "category": "accessibility"
+        },
+        {
+          "id": "E16",
+          "title": "Unchecking a completed todo restores it to active and updates the counter",
+          "preconditions": [
+            "One completed todo 'Task A' exists; items-left counter shows '0 items left'"
+          ],
+          "steps": [
+            "Click the checkbox of the completed 'Task A' todo to uncheck it"
+          ],
+          "expected": "The todo 'Task A' is no longer styled as completed; the items-left counter updates to '1 item left'; the 'Clear completed' button disappears from the footer",
+          "category": "happy-path"
+        }
+      ],
+      "categoryCounts": {
+        "happy-path": 6,
+        "edge-case": 5,
+        "error-handling": 2,
+        "accessibility": 1,
+        "persistence": 1,
+        "internationalization": 0,
+        "other": 1
+      }
+    }
+  ],
+  "aggregatesAcrossSeeds23": {
+    "Baseline-16": {
+      "happy-path": [
+        11,
+        9
+      ],
+      "edge-case": [
+        4,
+        3
+      ],
+      "error-handling": [
+        1,
+        2
+      ],
+      "accessibility": [
+        0,
+        1
+      ],
+      "persistence": [
+        0,
+        0
+      ],
+      "internationalization": [
+        0,
+        0
+      ],
+      "other": [
+        0,
+        1
+      ]
+    },
+    "Baseline-16-Enhanced": {
+      "happy-path": [
+        9,
+        9
+      ],
+      "edge-case": [
+        3,
+        3
+      ],
+      "error-handling": [
+        1,
+        2
+      ],
+      "accessibility": [
+        1,
+        1
+      ],
+      "persistence": [
+        1,
+        1
+      ],
+      "internationalization": [
+        0,
+        0
+      ],
+      "other": [
+        1,
+        0
+      ]
+    },
+    "Enriched-16": {
+      "happy-path": [
+        6,
+        6
+      ],
+      "edge-case": [
+        7,
+        5
+      ],
+      "error-handling": [
+        1,
+        2
+      ],
+      "accessibility": [
+        0,
+        1
+      ],
+      "persistence": [
+        0,
+        1
+      ],
+      "internationalization": [
+        0,
+        0
+      ],
+      "other": [
+        2,
+        1
+      ]
+    }
+  }
+}

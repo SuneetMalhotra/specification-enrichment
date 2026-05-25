@@ -1,0 +1,13 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+.env
+.env.local
+
+# Harness output — keep canonical samples under results/ but ignore
+# the working file in the repo root.
+results.json
+
+# Harness intermediate checkpoint files (per-step resumability)
+.harness-checkpoint-*.json

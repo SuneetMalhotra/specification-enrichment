@@ -1,0 +1,1181 @@
+{
+  "metadata": {
+    "timestamp": "2026-05-25T06:39:46.140Z",
+    "provider": "anthropic-oauth",
+    "model": "claude-sonnet-4-6",
+    "designId": "todomvc-public-1",
+    "designName": "TodoMVC",
+    "enricherVersion": "1.0.0",
+    "methodologyNote": "Test cases generated and graded by the same model family (claude-sonnet-4-6, temperature 0). Judge prompted in two orderings; conservative aggregate (worse of the two) used when runs disagree. Inter-prompt agreement reported as judgeAgreementPct. This is LLM-as-judge methodology; human-validated grading is in progress as future work and will be reported in the journal version."
+  },
+  "baseline": {
+    "testCases": [
+      {
+        "id": "T1",
+        "title": "Add a new todo by typing and pressing Enter",
+        "category": "happy-path"
+      },
+      {
+        "id": "T2",
+        "title": "Mark an active todo as complete",
+        "category": "happy-path"
+      },
+      {
+        "id": "T3",
+        "title": "Unmark a completed todo back to active",
+        "category": "happy-path"
+      },
+      {
+        "id": "T4",
+        "title": "Delete a todo via the destroy button",
+        "category": "happy-path"
+      },
+      {
+        "id": "T5",
+        "title": "Filter the list to show only Active todos",
+        "category": "happy-path"
+      },
+      {
+        "id": "T6",
+        "title": "Filter the list to show only Completed todos",
+        "category": "happy-path"
+      },
+      {
+        "id": "T7",
+        "title": "Return to All filter after filtering",
+        "category": "happy-path"
+      },
+      {
+        "id": "T8",
+        "title": "Clear all completed todos at once",
+        "category": "happy-path"
+      },
+      {
+        "id": "T9",
+        "title": "Footer is hidden when no todos exist",
+        "category": "happy-path"
+      },
+      {
+        "id": "T10",
+        "title": "Footer appears when the first todo is added",
+        "category": "happy-path"
+      },
+      {
+        "id": "T11",
+        "title": "Item count uses singular 'item' for exactly one active todo",
+        "category": "happy-path"
+      },
+      {
+        "id": "T12",
+        "title": "Item count uses plural 'items' for more than one active todo",
+        "category": "happy-path"
+      },
+      {
+        "id": "T13",
+        "title": "Item count reflects only active (uncompleted) todos",
+        "category": "happy-path"
+      },
+      {
+        "id": "T14",
+        "title": "Pressing Enter on empty input does not add a todo",
+        "category": "edge-case"
+      },
+      {
+        "id": "T15",
+        "title": "Submitting whitespace-only input does not add a todo",
+        "category": "edge-case"
+      },
+      {
+        "id": "T16",
+        "title": "Leading and trailing whitespace is trimmed from todo text",
+        "category": "edge-case"
+      },
+      {
+        "id": "T17",
+        "title": "Input field is cleared after a successful todo submission",
+        "category": "edge-case"
+      },
+      {
+        "id": "T18",
+        "title": "Input placeholder is visible when field is empty and unfocused",
+        "category": "edge-case"
+      },
+      {
+        "id": "T19",
+        "title": "Placeholder disappears when user begins typing",
+        "category": "edge-case"
+      },
+      {
+        "id": "T20",
+        "title": "Destroy button is not visible before hovering a todo item",
+        "category": "edge-case"
+      },
+      {
+        "id": "T21",
+        "title": "Destroy button becomes visible on hover",
+        "category": "edge-case"
+      },
+      {
+        "id": "T22",
+        "title": "Destroy button disappears after mouse leaves todo item",
+        "category": "edge-case"
+      },
+      {
+        "id": "T23",
+        "title": "'Clear completed' button is hidden when no todos are completed",
+        "category": "edge-case"
+      },
+      {
+        "id": "T24",
+        "title": "'Clear completed' button appears when a todo is marked complete",
+        "category": "edge-case"
+      },
+      {
+        "id": "T25",
+        "title": "Add a todo with very long text",
+        "category": "edge-case"
+      },
+      {
+        "id": "T26",
+        "title": "Add a todo with special HTML characters",
+        "category": "edge-case"
+      },
+      {
+        "id": "T27",
+        "title": "Add a todo with emoji characters",
+        "category": "edge-case"
+      },
+      {
+        "id": "T28",
+        "title": "Active filter shows zero items when all todos are completed",
+        "category": "edge-case"
+      },
+      {
+        "id": "T29",
+        "title": "Completed filter shows zero items when no todos are completed",
+        "category": "edge-case"
+      },
+      {
+        "id": "T30",
+        "title": "Deleting the last todo hides the footer",
+        "category": "edge-case"
+      },
+      {
+        "id": "T31",
+        "title": "Clearing all completed todos hides 'Clear completed' button",
+        "category": "edge-case"
+      },
+      {
+        "id": "T32",
+        "title": "Adding multiple todos preserves insertion order",
+        "category": "edge-case"
+      },
+      {
+        "id": "T33",
+        "title": "New todo input receives focus on page load",
+        "category": "accessibility"
+      },
+      {
+        "id": "T34",
+        "title": "Todo input is reachable and operable via keyboard Tab",
+        "category": "accessibility"
+      },
+      {
+        "id": "T35",
+        "title": "Todo checkboxes are operable via keyboard",
+        "category": "accessibility"
+      },
+      {
+        "id": "T36",
+        "title": "Filter links are reachable and activatable via keyboard",
+        "category": "accessibility"
+      },
+      {
+        "id": "T37",
+        "title": "'Clear completed' button is reachable via keyboard",
+        "category": "accessibility"
+      },
+      {
+        "id": "T38",
+        "title": "Checkbox has a visible label associated for screen readers",
+        "category": "accessibility"
+      },
+      {
+        "id": "T39",
+        "title": "Header title 'todos' is present in the DOM",
+        "category": "accessibility"
+      },
+      {
+        "id": "T40",
+        "title": "Todos persist after page refresh",
+        "category": "persistence"
+      },
+      {
+        "id": "T41",
+        "title": "Active filter selection persists after page refresh",
+        "category": "persistence"
+      },
+      {
+        "id": "T42",
+        "title": "Destroying a todo under the Active filter does not expose completed todos",
+        "category": "other"
+      },
+      {
+        "id": "T43",
+        "title": "Completing a todo under the Active filter removes it from view immediately",
+        "category": "other"
+      },
+      {
+        "id": "T44",
+        "title": "Uncompleting a todo under the Completed filter removes it from view immediately",
+        "category": "other"
+      },
+      {
+        "id": "T45",
+        "title": "Correct filter option is visually indicated as selected on load",
+        "category": "other"
+      }
+    ],
+    "grades": [
+      {
+        "testCaseId": "T1",
+        "verdict": "accepted-as-is",
+        "reason": "The preconditions, steps, and expected outcomes all align precisely with the design's specified components and behaviors, including input submission via Enter, list rendering, input clearing, footer visibility rule, and item count display.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T2",
+        "verdict": "accepted-as-is",
+        "reason": "The test case correctly targets the checkbox component, specifies a concrete precondition, and the expected outcome maps precisely to design-specified components (checkbox state, item styling, and the 'N items left' count).",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T3",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly exercises the toggle-off behavior implied by the checkbox component, with accurate preconditions and an expected outcome that aligns with the design's item count and completion state semantics.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T4",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly exercises the hover-to-reveal destroy button specified in the design, and the expected outcome accurately reflects both the list removal and the footer visibility rule tied to todo count.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T5",
+        "verdict": "accepted-as-is",
+        "reason": "The test case correctly targets the Active filter behavior specified in the design, has appropriate preconditions to make the filter meaningful, and the expected outcome precisely matches the design's filter purpose.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T6",
+        "verdict": "accepted-as-is",
+        "reason": "The test case correctly exercises the Completed filter against the specified filter options, has appropriate preconditions to validate both inclusion and exclusion behavior, and the expected outcome aligns precisely with the design's filter purpose.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T7",
+        "verdict": "accepted-as-is",
+        "reason": "The test case directly exercises the filter component specified in the design, has clear preconditions, unambiguous steps, and a verifiable expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T8",
+        "verdict": "accepted-as-is",
+        "reason": "All expected outcomes directly follow from the design's specified components and their visibility rules, preconditions are precise and sufficient, and no unspecified behavior is asserted.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T9",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly states the footer visibility is 'when at least one todo exists', so testing its absence on an empty list directly validates a specified constraint.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T10",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly validates the footer visibility condition, item count text, filter presence, and conditional absence of 'Clear completed'—all explicitly specified in the design.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T11",
+        "verdict": "accepted-as-is",
+        "reason": "The design specifies the count displays 'N items left' and this test correctly catches the singular/plural edge case at N=1, which is a well-defined implicit constraint worth validating.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T12",
+        "verdict": "accepted-as-is",
+        "reason": "The design specifies the count text as 'N items left' and the test correctly validates plural form for N>1, which is a standard implicit constraint worth pinning.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T13",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly validates the design's 'N items left' count component with a clear precondition, unambiguous expected output, and correct interpretation that the count tracks active (uncompleted) todos only.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T14",
+        "verdict": "accepted-as-is",
+        "reason": "The design omits empty-input handling by intent, making this a valid implicit constraint; the precondition, steps, and expected outcome are unambiguous and correctly scoped.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T15",
+        "verdict": "major-rework",
+        "reason": "disagreement; conservative aggregate: The design explicitly notes that edge cases like empty/whitespace input are intentionally absent and left for the enrichment stage to surface as implicit constraints — this test case asserts specific behavior (rejection of whitespace) that the design neither specifies nor implies, making it a test of an assumed policy rather than a documented requirement. | Whitespace-only rejection is a universally expected edge-case behavior for input validation, and the preconditions, steps, and expected outcome are unambiguous and self-consistent with the design's input component.",
+        "rawRun1": "major-rework",
+        "rawRun2": "accepted-as-is",
+        "agreed": false
+      },
+      {
+        "testCaseId": "T16",
+        "verdict": "major-rework",
+        "reason": "disagreement; conservative aggregate: The design explicitly notes that whitespace trimming is an edge case intentionally absent from the specification, so this test asserts behavior the design does not define. | The design does not explicitly specify trimming behavior, so the expected result should note this is an assumed/implicit constraint rather than a stated requirement, or the precondition should reference that whitespace trimming is a TodoMVC community convention.",
+        "rawRun1": "major-rework",
+        "rawRun2": "minor-edit",
+        "agreed": false
+      },
+      {
+        "testCaseId": "T17",
+        "verdict": "minor-edit",
+        "reason": "The test is valid and the expected outcome is correct, but the category should be 'functional' or 'core-behavior' rather than 'edge-case' since clearing the input after submission is standard expected behavior, not an edge case.",
+        "rawRun1": "minor-edit",
+        "rawRun2": "minor-edit",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T18",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly specifies the placeholder text 'What needs to be done?' for #new-todo, and verifying its visibility in the default empty/unfocused state is a valid, well-formed check against that specification.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T19",
+        "verdict": "accepted-as-is",
+        "reason": "The design specifies a placeholder on the #new-todo input and this test correctly verifies standard browser placeholder behavior—disappearing on input—with clear preconditions, steps, and expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T20",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly specifies the destroy button visibility as 'on hover', making this a direct verification of a stated design constraint with correct preconditions and expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T21",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly specifies the destroy button has visibility 'on hover', and the expected outcome correctly captures both appearance and isolation to the hovered item.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T22",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly specifies the destroy button has 'on hover' visibility, so testing that it re-hides when the mouse leaves directly validates that specification.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T23",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly validates the design-specified visibility rule for the 'Clear completed' button and has correct, unambiguous preconditions and expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T24",
+        "verdict": "accepted-as-is",
+        "reason": "The test case directly validates the design-specified visibility rule for the 'Clear completed' button and has correct preconditions, steps, and expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T25",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly notes long input as an implicit edge case to surface, the preconditions and steps are unambiguous, and the expected outcome correctly distinguishes acceptable layout wrapping from unacceptable silent truncation.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T26",
+        "verdict": "accepted-as-is",
+        "reason": "XSS prevention via literal character rendering is a fundamental implicit constraint for any web app handling user input, the preconditions and steps are unambiguous, and the expected outcome is precisely specified and verifiable.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T27",
+        "verdict": "major-rework",
+        "reason": "The design explicitly states that emoji/Unicode handling is an intentional gap left for the enrichment stage and is not specified, so this test case asserts behavior the design does not define.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T28",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly exercises the Active filter under the edge condition where all todos are completed, with preconditions, steps, and expected outcomes that are fully consistent with the design's filter and footer visibility specifications.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T29",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly derives all three expected outcomes from the design: empty list under Completed filter, footer visible because todos exist, and no Clear completed button because none are completed.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T30",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly states the footer is visible only when at least one todo exists, so removing the last todo hiding the footer is a direct, correctly-specified behavioral consequence.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T31",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly exercises the design-specified conditional visibility of the 'Clear completed' button and verifies both the removal behavior and the retention of active todos, with all preconditions and expected outcomes precisely stated.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T32",
+        "verdict": "minor-edit",
+        "reason": "The test is valid and grounded in the design, but categorized as 'edge-case' when it is more accurately a core functional behavior of the list component.",
+        "rawRun1": "minor-edit",
+        "rawRun2": "minor-edit",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T33",
+        "verdict": "accepted-as-is",
+        "reason": "Auto-focusing the primary input on load is a well-established TodoMVC convention and a reasonable accessibility/UX expectation derivable from the design's emphasis on the new-todo input as the primary entry point.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T34",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly verifies keyboard accessibility of the primary input, which is a reasonable implicit constraint for any public-facing web application, and the preconditions, steps, and expected outcome are unambiguous and consistent with the design.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T35",
+        "verdict": "accepted-as-is",
+        "reason": "Keyboard operability of checkboxes is a valid implicit accessibility constraint not contradicted by the design, the precondition is correct, and the expected outcome is unambiguous.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T36",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly exercises keyboard accessibility for the filter controls, the precondition properly ensures footer visibility per the design, and the expected outcome matches the filter behavior specified in the design.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T37",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly validates keyboard accessibility of a visible interactive control, uses correct preconditions per the design's visibility rule, and has an unambiguous expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T38",
+        "verdict": "major-rework",
+        "reason": "The design explicitly states accessibility targets are absent and intentionally out of scope, so a test case requiring specific accessible-name implementation cannot be derived from or validated against the given design specification.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T39",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly specifies a header component with text 'todos', and verifying its DOM presence is a valid, well-formed acceptance check with clear preconditions and expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T40",
+        "verdict": "major-rework",
+        "reason": "The design explicitly states persistence behavior is absent and intentionally unspecified, so this test case has no grounding in the design; the hedged expected outcome ('if persistence is implemented') makes it untestable as written.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T41",
+        "verdict": "major-rework",
+        "reason": "The design explicitly states persistence behavior is intentionally absent, so a test case whose expected outcome branches on whether persistence is implemented is untestable against the spec; the test should instead assert the single defined default behavior or be deferred to an implementation-level spec.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T42",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly validates that filter state and completed-todo visibility are preserved after a destroy action, all of which are behaviors consistent with the design's filter and visibility specifications.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T43",
+        "verdict": "accepted-as-is",
+        "reason": "The test case correctly exercises the real-time filter behavior specified by the design — completing an item under the Active filter should remove it from view, decrement the active count, and trigger the conditional visibility of the Clear completed button, all of which are specified components with documented visibility rules.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T44",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly verifies filter-view consistency when completion state changes, and the expected outcomes (item removal from view, count increment, conditional button hide) all follow directly from the design's filter and footer specifications.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T45",
+        "verdict": "accepted-as-is",
+        "reason": "The design specifies three filter options and the 'All' filter is the logical default active state on load, making this a valid implicit constraint the test correctly surfaces.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      }
+    ],
+    "summary": {
+      "total": 45,
+      "acceptedAsIs": 37,
+      "minorEdit": 2,
+      "majorRework": 6,
+      "acceptedAsIsPct": 82.2,
+      "minorEditPct": 4.4,
+      "majorReworkPct": 13.3,
+      "judgeAgreementPct": 95.6
+    }
+  },
+  "enriched": {
+    "derivedConstraints": 11,
+    "reviewQuestions": 4,
+    "testCases": [
+      {
+        "id": "T1",
+        "title": "Add a new todo by typing and pressing Enter",
+        "category": "happy-path"
+      },
+      {
+        "id": "T2",
+        "title": "Add multiple todos sequentially",
+        "category": "happy-path"
+      },
+      {
+        "id": "T3",
+        "title": "Mark an active todo as complete via checkbox",
+        "category": "happy-path"
+      },
+      {
+        "id": "T4",
+        "title": "Unmark a completed todo back to active",
+        "category": "happy-path"
+      },
+      {
+        "id": "T5",
+        "title": "Delete a todo using the destroy button on hover",
+        "category": "happy-path"
+      },
+      {
+        "id": "T6",
+        "title": "Filter list to Active only",
+        "category": "happy-path"
+      },
+      {
+        "id": "T7",
+        "title": "Filter list to Completed only",
+        "category": "happy-path"
+      },
+      {
+        "id": "T8",
+        "title": "Return to All filter shows every todo",
+        "category": "happy-path"
+      },
+      {
+        "id": "T9",
+        "title": "Clear completed removes all completed todos",
+        "category": "happy-path"
+      },
+      {
+        "id": "T10",
+        "title": "Toggle-all marks all active todos as complete",
+        "category": "happy-path"
+      },
+      {
+        "id": "T11",
+        "title": "Toggle-all when all todos are complete marks all as active",
+        "category": "happy-path"
+      },
+      {
+        "id": "T12",
+        "title": "Inline edit: double-click label, save with Enter",
+        "category": "happy-path"
+      },
+      {
+        "id": "T13",
+        "title": "Inline edit: save by clicking outside the edit field",
+        "category": "happy-path"
+      },
+      {
+        "id": "T14",
+        "title": "Submitting empty input does not create a todo",
+        "category": "error-handling"
+      },
+      {
+        "id": "T15",
+        "title": "Submitting whitespace-only input does not create a todo",
+        "category": "error-handling"
+      },
+      {
+        "id": "T16",
+        "title": "Todo text is trimmed of leading and trailing whitespace on creation",
+        "category": "edge-case"
+      },
+      {
+        "id": "T17",
+        "title": "Cancel inline edit with Escape reverts to original text",
+        "category": "edge-case"
+      },
+      {
+        "id": "T18",
+        "title": "Saving an inline edit with empty text deletes the item",
+        "category": "edge-case"
+      },
+      {
+        "id": "T19",
+        "title": "Saving an inline edit with whitespace-only text deletes the item",
+        "category": "edge-case"
+      },
+      {
+        "id": "T20",
+        "title": "Toggle-all with mixed state marks all as complete",
+        "category": "edge-case"
+      },
+      {
+        "id": "T21",
+        "title": "Footer is hidden when no todos exist",
+        "category": "edge-case"
+      },
+      {
+        "id": "T22",
+        "title": "'Clear completed' button is hidden when no completed todos exist",
+        "category": "edge-case"
+      },
+      {
+        "id": "T23",
+        "title": "'items left' count shows 0 when all todos are completed",
+        "category": "edge-case"
+      },
+      {
+        "id": "T24",
+        "title": "Singular 'item' used when exactly one active todo remains",
+        "category": "edge-case"
+      },
+      {
+        "id": "T25",
+        "title": "Plural 'items' used when two or more active todos exist",
+        "category": "edge-case"
+      },
+      {
+        "id": "T26",
+        "title": "Very long todo text is stored and displayed without error",
+        "category": "edge-case"
+      },
+      {
+        "id": "T27",
+        "title": "Todo text containing special characters is stored correctly",
+        "category": "edge-case"
+      },
+      {
+        "id": "T28",
+        "title": "Destroy button is only visible on hover, not by default",
+        "category": "edge-case"
+      },
+      {
+        "id": "T29",
+        "title": "Todos persist in localStorage across a page refresh",
+        "category": "persistence"
+      },
+      {
+        "id": "T30",
+        "title": "A newly added todo persists after refresh",
+        "category": "persistence"
+      },
+      {
+        "id": "T31",
+        "title": "Deleting a todo is persisted after refresh",
+        "category": "persistence"
+      },
+      {
+        "id": "T32",
+        "title": "Clearing localStorage removes all todos on next load",
+        "category": "persistence"
+      },
+      {
+        "id": "T33",
+        "title": "Completed visual distinction is applied to completed todos",
+        "category": "other"
+      },
+      {
+        "id": "T34",
+        "title": "Active filter is visually highlighted when selected",
+        "category": "other"
+      },
+      {
+        "id": "T35",
+        "title": "'items left' count reflects only active todos, not completed",
+        "category": "other"
+      },
+      {
+        "id": "T36",
+        "title": "Completing a todo via toggle-all decrements items-left count correctly",
+        "category": "other"
+      },
+      {
+        "id": "T37",
+        "title": "Keyboard: new-todo input can be submitted without mouse",
+        "category": "accessibility"
+      },
+      {
+        "id": "T38",
+        "title": "Keyboard: todo checkbox can be toggled with Space",
+        "category": "accessibility"
+      },
+      {
+        "id": "T39",
+        "title": "Keyboard: destroy button is reachable and activatable via Tab and Enter",
+        "category": "accessibility"
+      },
+      {
+        "id": "T40",
+        "title": "Inline edit input receives focus automatically on double-click",
+        "category": "accessibility"
+      },
+      {
+        "id": "T41",
+        "title": "Page has a meaningful title or heading for screen readers",
+        "category": "accessibility"
+      },
+      {
+        "id": "T42",
+        "title": "Application operates without authentication and shows todos immediately",
+        "category": "other"
+      }
+    ],
+    "grades": [
+      {
+        "testCaseId": "T1",
+        "verdict": "accepted-as-is",
+        "reason": "The test case correctly exercises the core add-todo flow against specified components (new-todo input, todo-list, footer count) with a precise expected outcome that matches the design.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T2",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly exercises sequential insertion using specified interactions, verifies list ordering and the footer count component, and matches the design's specified behavior without assumptions beyond what is documented.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T3",
+        "verdict": "accepted-as-is",
+        "reason": "The test case accurately targets the checkbox interaction specified in the design, includes a clear precondition, and the expected outcome covers the three observable state changes (checkbox state, visual styling, count decrement) that are directly derivable from the design's components.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T4",
+        "verdict": "accepted-as-is",
+        "reason": "The test case accurately targets the toggle-off behavior implied by the checkbox component, includes a concrete precondition, and the expected outcome correctly covers all three observable effects: checkbox state, visual style, and count change.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T5",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly exercises the hover-visibility destroy button specified in the design, covers both the deletion and the footer-visibility side effect, and the precondition is correctly minimal.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T6",
+        "verdict": "accepted-as-is",
+        "reason": "The test case correctly targets the Active filter behavior specified in the design, has appropriate preconditions, and the expected outcome precisely matches the design's filter purpose.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T7",
+        "verdict": "accepted-as-is",
+        "reason": "The test case correctly targets the Completed filter specified in the design, has appropriate preconditions, and the expected outcome aligns precisely with the filter's stated purpose.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T8",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly validates the 'All' filter option specified in the design, with clear preconditions, unambiguous expected outcome including both list state and visual selection feedback, and correct category classification.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T9",
+        "verdict": "accepted-as-is",
+        "reason": "The test case accurately targets the 'Clear completed' button behavior specified in the design, includes all necessary preconditions, and the expected outcome correctly covers item removal, active todo preservation, button visibility change, and count accuracy.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T10",
+        "verdict": "major-rework",
+        "reason": "The design does not specify a toggle-all control; no such component appears in the design's component list, so this test case exercises functionality outside the defined design scope.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T11",
+        "verdict": "major-rework",
+        "reason": "The design does not specify a toggle-all control; no such component appears in the design's component list, making this test case untestable against the specified design.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T12",
+        "verdict": "major-rework",
+        "reason": "The design does not specify inline editing or double-click-to-edit behavior; no edit input, double-click interaction, or edit mode is described in any component.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T13",
+        "verdict": "major-rework",
+        "reason": "The design does not specify inline editing or double-click-to-edit behavior; this test case exercises functionality absent from the design.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T14",
+        "verdict": "major-rework",
+        "reason": "disagreement; conservative aggregate: The design explicitly notes that empty input edge cases are intentionally absent from the specification, so this test case asserts behavior the design does not specify. | Empty-input rejection is a universally expected invariant for this interaction pattern and the test is unambiguous, correctly preconditioned, and consistent with the design's input component behavior.",
+        "rawRun1": "major-rework",
+        "rawRun2": "accepted-as-is",
+        "agreed": false
+      },
+      {
+        "testCaseId": "T15",
+        "verdict": "major-rework",
+        "reason": "The design explicitly notes that empty/whitespace input edge cases are intentionally absent and left for the enrichment stage, so this test case asserts a specific behavior (input cleared, no item added) that contradicts the design's stated scope — the expected outcome is an assumption, not a specified behavior.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T16",
+        "verdict": "major-rework",
+        "reason": "Whitespace trimming behavior on creation is not specified in the design; the notes explicitly flag empty/edge-case input handling as intentionally absent, so this test asserts an implementation detail the design does not define.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T17",
+        "verdict": "major-rework",
+        "reason": "The design does not specify inline editing (double-click to edit) as a feature; this interaction is absent from the itemComponents list, which only includes checkbox, label, and destroy button.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T18",
+        "verdict": "major-rework",
+        "reason": "The design's todo-item components list only checkbox, label, and destroy button with no documented inline-edit interaction, so this test case exercises an entirely unspecified feature; the expected deletion behavior cannot be validated against the design as written.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T19",
+        "verdict": "major-rework",
+        "reason": "The design does not specify inline editing (double-click to edit mode) as a feature — that behavior is absent from the component definitions — so this test case tests an unspecified capability.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T20",
+        "verdict": "major-rework",
+        "reason": "The design specifies no toggle-all control; this test case exercises a component entirely absent from the design's component list.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T21",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly states the footer visibility condition as 'when at least one todo exists', so this test directly validates that specified behavior with correct preconditions and expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T22",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly verifies the design-specified visibility rule that 'Clear completed' is shown only when at least one completed todo exists, with correct preconditions and an unambiguous expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T23",
+        "verdict": "accepted-as-is",
+        "reason": "The count component is specified to show 'N items left' where N reflects active (non-completed) items, so zero active items displaying '0 items left' is a valid, unambiguous edge case directly derivable from the design.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T24",
+        "verdict": "accepted-as-is",
+        "reason": "The design specifies the footer count as 'N items left' without addressing singular/plural grammar, and this test correctly probes that implicit edge case with a clear precondition and unambiguous expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T25",
+        "verdict": "minor-edit",
+        "reason": "disagreement; conservative aggregate: The test correctly verifies the plural form of the footer count against the design's specified 'N items left' text, with a clear precondition and unambiguous expected outcome. | The test correctly checks plural 'items' for N≥2 but misses the complementary singular 'item' contrast that makes this an edge case worth having; more critically, the precondition should specify exactly two active todos to pin N=2 as the boundary, otherwise the test is redundant with any general count test.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "minor-edit",
+        "agreed": false
+      },
+      {
+        "testCaseId": "T26",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly notes that very long input handling is an implicit constraint the enrichment stage should surface, and the test correctly probes that gap with a clear precondition, deterministic steps, and a reasonable expected outcome that allows for CSS overflow without permitting data truncation.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T27",
+        "verdict": "minor-edit",
+        "reason": "The test is valid and important but the expected outcome conflates two distinct assertions — behavioral (no script executes) and implementation (HTML-escaped in DOM) — which are not equivalent and the design does not specify DOM encoding strategy; the expected outcome should focus solely on the observable behavior (literal text displayed, no script execution) rather than prescribing the implementation mechanism.",
+        "rawRun1": "minor-edit",
+        "rawRun2": "minor-edit",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T28",
+        "verdict": "accepted-as-is",
+        "reason": "The test case directly verifies the design-specified behavior that the destroy button has 'visibility: on hover', with correct preconditions and an unambiguous expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T29",
+        "verdict": "major-rework",
+        "reason": "The design explicitly states that persistence behavior is intentionally absent and unspecified, so this test case asserts a concrete implementation detail (localStorage) that the design does not support or contradict.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T30",
+        "verdict": "major-rework",
+        "reason": "The design explicitly states persistence behavior is intentionally absent and unspecified, so testing for a specific persistence outcome asserts behavior the design neither requires nor excludes.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T31",
+        "verdict": "major-rework",
+        "reason": "The design explicitly states that persistence behavior is intentionally absent and unspecified, so a test asserting persistence after refresh contradicts the design scope.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T32",
+        "verdict": "major-rework",
+        "reason": "The design explicitly states persistence behavior is absent and intentionally unspecified, so a test case asserting localStorage-based persistence semantics has no basis in the design.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T33",
+        "verdict": "accepted-as-is",
+        "reason": "The design specifies a checkbox to mark complete and a label for todo text, making visual distinction of completed items an implicit but necessary UI behavior that this test correctly validates against observable output.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T34",
+        "verdict": "accepted-as-is",
+        "reason": "The design specifies a filters component with selectable options, and visual indication of the active selection is a standard, implicit requirement for any filter UI; the test steps and expected outcome are unambiguous and complete.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T35",
+        "verdict": "accepted-as-is",
+        "reason": "The design specifies the footer count as 'N items left' and distinguishes active from completed todos via the checkbox and filters, so counting only active todos is the correct interpretation, and this test case verifies that behavior precisely with a clear precondition, step, and expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T36",
+        "verdict": "major-rework",
+        "reason": "The design specifies no toggle-all component; this test exercises a feature not present in the design.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T37",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly validates the design-specified 'enter to submit' interaction on the new-todo input and the keyboard-navigable precondition is realistic and complete.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T38",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly validates that a native checkbox element responds to Space key per standard browser/accessibility behavior, the preconditions are precise, and the expected outcome is unambiguous.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T39",
+        "verdict": "major-rework",
+        "reason": "disagreement; conservative aggregate: The design specifies the destroy button is only visible on hover, making keyboard-only Tab access to it an unspecified behavior — the test asserts a specific interaction model (Tab+Enter) that the design does not define and that may contradict the hover-only visibility constraint. | The destroy button is visibility:'on hover' per the design, so the precondition should specify that the item is hovered (or focused) to make the button visible before Tab navigation begins, otherwise step 1 is ambiguous about how the button becomes reachable.",
+        "rawRun1": "major-rework",
+        "rawRun2": "minor-edit",
+        "agreed": false
+      },
+      {
+        "testCaseId": "T40",
+        "verdict": "major-rework",
+        "reason": "The design does not specify inline editing or double-click behavior on todo labels; this feature is absent from the design's component and interaction definitions.",
+        "rawRun1": "major-rework",
+        "rawRun2": "major-rework",
+        "agreed": true
+      },
+      {
+        "testCaseId": "T41",
+        "verdict": "major-rework",
+        "reason": "disagreement; conservative aggregate: The design specifies no accessibility targets or screen reader requirements, so this test case evaluates behavior explicitly outside the design's scope. | The design explicitly includes a header component with text 'todos', and verifying its semantic heading role is a legitimate accessibility test that is clear, actionable, and consistent with the design.",
+        "rawRun1": "major-rework",
+        "rawRun2": "accepted-as-is",
+        "agreed": false
+      },
+      {
+        "testCaseId": "T42",
+        "verdict": "accepted-as-is",
+        "reason": "The design specifies no authentication mechanism whatsoever, making this a valid boundary test confirming the app is publicly accessible and functional without any auth gate.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      }
+    ],
+    "summary": {
+      "total": 42,
+      "acceptedAsIs": 21,
+      "minorEdit": 2,
+      "majorRework": 19,
+      "acceptedAsIsPct": 50,
+      "minorEditPct": 4.8,
+      "majorReworkPct": 45.2,
+      "judgeAgreementPct": 90.5
+    }
+  },
+  "delta": {
+    "acceptedAsIsPctDelta": -32.2,
+    "minorEditPctDelta": 0.39999999999999947,
+    "majorReworkPctDelta": 31.900000000000002
+  }
+}

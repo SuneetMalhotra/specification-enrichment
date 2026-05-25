@@ -1,0 +1,43 @@
+{
+  "name": "specification-enrichment",
+  "version": "1.0.0",
+  "description": "Reference implementation for the Specification Enrichment pipeline pattern (Malhotra, 2026). Companion code to the IEEE Software Practice column article.",
+  "license": "MIT",
+  "author": "Suneet Malhotra",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SuneetMalhotra/specification-enrichment"
+  },
+  "keywords": [
+    "ai",
+    "llm",
+    "test-automation",
+    "software-engineering",
+    "design-to-code",
+    "human-in-the-loop",
+    "specification",
+    "claude",
+    "anthropic"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "example": "tsx examples/run-example.ts",
+    "harness:stub": "tsx harness.ts --provider stub",
+    "harness:anthropic": "tsx harness.ts --provider anthropic",
+    "harness:count_matched": "tsx harness_count_matched.ts",
+    "harness:enhanced": "tsx harness_enhanced_baseline.ts",
+    "harness:threshold_sweep": "tsx harness_threshold_sweep.ts",
+    "harness:visitor_kiosk": "tsx harness_visitor_kiosk.ts",
+    "harness:all": "npm run harness:anthropic && npm run harness:count_matched && npm run harness:enhanced && npm run harness:threshold_sweep && npm run harness:visitor_kiosk",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

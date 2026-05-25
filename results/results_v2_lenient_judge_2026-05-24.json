@@ -1,0 +1,414 @@
+{
+  "metadata": {
+    "timestamp": "2026-05-25T06:46:51.523Z",
+    "provider": "anthropic-oauth",
+    "model": "claude-sonnet-4-6",
+    "designId": "todomvc-public-1",
+    "designName": "TodoMVC",
+    "enricherVersion": "1.0.0",
+    "methodologyNote": "Test cases generated and graded by the same model family (claude-sonnet-4-6, temperature 0). Judge prompted in two orderings; conservative aggregate (worse of the two) used when runs disagree. Inter-prompt agreement reported as judgeAgreementPct. This is LLM-as-judge methodology; human-validated grading is in progress as future work and will be reported in the journal version."
+  },
+  "baseline": {
+    "testCases": [
+      {
+        "id": "B1",
+        "title": "Add a new todo by pressing Enter",
+        "category": "happy-path"
+      },
+      {
+        "id": "B2",
+        "title": "Mark an active todo as completed",
+        "category": "happy-path"
+      },
+      {
+        "id": "B3",
+        "title": "Delete a todo using the destroy button",
+        "category": "happy-path"
+      },
+      {
+        "id": "B4",
+        "title": "Footer is hidden when no todos exist",
+        "category": "happy-path"
+      },
+      {
+        "id": "B5",
+        "title": "Footer appears as soon as the first todo is added",
+        "category": "happy-path"
+      },
+      {
+        "id": "B6",
+        "title": "Active filter shows only incomplete todos",
+        "category": "happy-path"
+      },
+      {
+        "id": "B7",
+        "title": "Completed filter shows only completed todos",
+        "category": "happy-path"
+      },
+      {
+        "id": "B8",
+        "title": "All filter shows both active and completed todos",
+        "category": "happy-path"
+      },
+      {
+        "id": "B9",
+        "title": "Clear completed removes only completed todos",
+        "category": "happy-path"
+      },
+      {
+        "id": "B10",
+        "title": "Clear completed button is hidden when no todos are completed",
+        "category": "edge-case"
+      },
+      {
+        "id": "B11",
+        "title": "Pressing Enter on an empty or whitespace-only input does not add a todo",
+        "category": "error-handling"
+      },
+      {
+        "id": "B12",
+        "title": "Items left count accurately reflects active todo count",
+        "category": "edge-case"
+      }
+    ],
+    "grades": [
+      {
+        "testCaseId": "B1",
+        "verdict": "accepted-as-is",
+        "reason": "The test precisely exercises the primary creation flow with observable, specific expected outcomes that match the design's described behaviors for input submission, list population, input clearing, and footer visibility.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B2",
+        "verdict": "accepted-as-is",
+        "reason": "The test covers the core completion flow with clear preconditions, observable steps, and specific expected outcomes including the count decrement.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B3",
+        "verdict": "accepted-as-is",
+        "reason": "The test case correctly exercises the hover-to-reveal destroy button per the design, verifies the item is removed from the list, and checks the conditional footer visibility rule — all observable, preconditions are clear, and the expected outcome is fully specified.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B4",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly states the footer visibility is 'when at least one todo exists', so testing its absence on an empty list is a direct, observable, well-specified happy-path check.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B5",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly validates the design's explicit rule that the footer is visible 'when at least one todo exists,' with clear preconditions, observable steps, and a specific expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B6",
+        "verdict": "accepted-as-is",
+        "reason": "The test case directly exercises the Active filter behavior specified in the design, with clear preconditions, observable steps, and a fully verifiable expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B7",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly exercises the Completed filter from the design's filter options, has clear preconditions, concrete observable outcomes, and verifies both inclusion and exclusion behavior plus filter selection state.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B8",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly verifies that switching from the Completed filter to All restores visibility of both active and completed todos, covering a core filter interaction explicitly described in the design.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B9",
+        "verdict": "accepted-as-is",
+        "reason": "The test case is fully specified with clear preconditions, observable steps, and a verifiable expected outcome that directly exercises the 'Clear completed' button's core behavior as described in the design.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B10",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly verifies the design-specified conditional visibility rule for the 'Clear completed' button and has clear preconditions, observable steps, and an unambiguous expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B11",
+        "verdict": "accepted-as-is",
+        "reason": "Preventing empty/whitespace-only todo creation is a standard implicit requirement for this category of application and is consistently implemented across all TodoMVC reference implementations.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B12",
+        "verdict": "accepted-as-is",
+        "reason": "The test correctly verifies both the accurate count display and the singular/plural distinction ('item' vs 'items'), covering a real edge case that the design implies but does not spell out.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      }
+    ],
+    "summary": {
+      "total": 12,
+      "acceptedAsIs": 12,
+      "minorEdit": 0,
+      "majorRework": 0,
+      "acceptedAsIsPct": 100,
+      "minorEditPct": 0,
+      "majorReworkPct": 0,
+      "judgeAgreementPct": 100
+    }
+  },
+  "enriched": {
+    "derivedConstraints": 9,
+    "reviewQuestions": 6,
+    "testCases": [
+      {
+        "id": "E1",
+        "title": "Add a new todo via Enter key",
+        "category": "happy-path"
+      },
+      {
+        "id": "E2",
+        "title": "Reject empty string input on Enter",
+        "category": "error-handling"
+      },
+      {
+        "id": "E3",
+        "title": "Reject whitespace-only input on Enter",
+        "category": "error-handling"
+      },
+      {
+        "id": "E4",
+        "title": "Trim leading and trailing whitespace before saving todo text",
+        "category": "edge-case"
+      },
+      {
+        "id": "E5",
+        "title": "Mark a todo complete via its checkbox",
+        "category": "happy-path"
+      },
+      {
+        "id": "E6",
+        "title": "Active count reflects only uncompleted todos",
+        "category": "happy-path"
+      },
+      {
+        "id": "E7",
+        "title": "Count label uses singular form when exactly one active todo remains",
+        "category": "edge-case"
+      },
+      {
+        "id": "E8",
+        "title": "Footer is hidden when the todo list is empty",
+        "category": "edge-case"
+      },
+      {
+        "id": "E9",
+        "title": "Destroy button is reachable and operable via keyboard",
+        "category": "accessibility"
+      },
+      {
+        "id": "E10",
+        "title": "Double-clicking a todo label enters inline editing mode",
+        "category": "edge-case"
+      },
+      {
+        "id": "E11",
+        "title": "Pressing Escape while editing reverts todo to its original text",
+        "category": "edge-case"
+      },
+      {
+        "id": "E12",
+        "title": "Toggle-all marks all active todos as complete",
+        "category": "edge-case"
+      },
+      {
+        "id": "E13",
+        "title": "Toggle-all when all todos are complete sets all todos to active",
+        "category": "edge-case"
+      },
+      {
+        "id": "E14",
+        "title": "Active filter shows only uncompleted todos",
+        "category": "happy-path"
+      },
+      {
+        "id": "E15",
+        "title": "Completed filter shows only completed todos",
+        "category": "happy-path"
+      },
+      {
+        "id": "E16",
+        "title": "Clear completed removes all completed todos and hides itself",
+        "category": "happy-path"
+      }
+    ],
+    "grades": [
+      {
+        "testCaseId": "E1",
+        "verdict": "accepted-as-is",
+        "reason": "The test case covers the primary creation flow with a clear precondition, observable expected outcomes covering list state, input clearing, and footer visibility, all of which are explicitly described in the design.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E2",
+        "verdict": "accepted-as-is",
+        "reason": "Rejecting empty submissions is a well-established implicit behavior of TodoMVC and any production todo app, the preconditions are clear, the steps are reproducible, and the expected outcome is fully observable.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E3",
+        "verdict": "accepted-as-is",
+        "reason": "Rejecting whitespace-only input is standard TodoMVC behavior and a well-specified, observable test with clear preconditions and expected outcomes.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E4",
+        "verdict": "accepted-as-is",
+        "reason": "Whitespace trimming is a standard implicit behavior for text input fields in production todo applications, the preconditions are clear, the steps are reproducible, and the expected outcome is precisely observable.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E5",
+        "verdict": "accepted-as-is",
+        "reason": "The test covers the core completion interaction with precise, observable expected outcomes tied directly to the design's checkbox, label, and count components.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E6",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly validates the footer count component's core behavior — reflecting only uncompleted todos — with clear preconditions, observable steps, and an unambiguous expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E7",
+        "verdict": "accepted-as-is",
+        "reason": "Singular/plural grammatical correctness for the count label is a well-established implicit requirement of this specific application and clearly testable with an unambiguous expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E8",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly states the footer's visibility condition is 'when at least one todo exists,' so testing the empty-list hidden state directly validates a specified design requirement with clear, observable expected outcomes.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E9",
+        "verdict": "accepted-as-is",
+        "reason": "Keyboard operability of interactive controls is a standard WCAG 2.1 requirement implicitly expected of any production web application, and the test correctly probes whether the hover-only destroy button is accessible without a mouse.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E10",
+        "verdict": "accepted-as-is",
+        "reason": "Inline editing on double-click is a well-established TodoMVC behavior present in every reference implementation, making this a valid and precisely specified test case even though the design omits it.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E11",
+        "verdict": "accepted-as-is",
+        "reason": "Escape-to-cancel is a well-established TodoMVC behavior (part of the de facto spec across all framework implementations) and this test case has clear preconditions, unambiguous steps, and a fully observable expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E12",
+        "verdict": "minor-edit",
+        "reason": "disagreement; conservative aggregate: Toggle-all is a canonical, universally implemented TodoMVC feature implied by the design's reference URL, and all preconditions, steps, and expected outcomes are specific and observable. | The toggle-all control is not described in the design, making the precondition 'locate the toggle-all control' potentially unresolvable; the expected outcome is otherwise precise and correct for this well-known implicit feature of TodoMVC.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "minor-edit",
+        "agreed": false
+      },
+      {
+        "testCaseId": "E13",
+        "verdict": "minor-edit",
+        "reason": "The toggle-all behavior described is correct per TodoMVC spec, but the design document does not mention a toggle-all control, so the precondition should explicitly state how to reach the all-complete state via toggle-all or per-item checkboxes, and the step 'locate the toggle-all control' needs a concrete locator or note that its existence must first be verified.",
+        "rawRun1": "minor-edit",
+        "rawRun2": "minor-edit",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E14",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly exercises the 'Active' filter against a well-defined precondition with concrete, observable expected outcomes including item visibility, filter selection state, and count accuracy.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E15",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly exercises the Completed filter against a minimal two-item fixture with one active and one completed todo, producing clearly observable and unambiguous pass/fail outcomes.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E16",
+        "verdict": "accepted-as-is",
+        "reason": "The test fully covers the 'Clear completed' button's specified behavior—removal of completed items, preservation of active items, button auto-hide, and count update—with correct preconditions and observable expected outcomes.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      }
+    ],
+    "summary": {
+      "total": 16,
+      "acceptedAsIs": 14,
+      "minorEdit": 2,
+      "majorRework": 0,
+      "acceptedAsIsPct": 87.5,
+      "minorEditPct": 12.5,
+      "majorReworkPct": 0,
+      "judgeAgreementPct": 93.8
+    }
+  },
+  "delta": {
+    "acceptedAsIsPctDelta": -12.5,
+    "minorEditPctDelta": 12.5,
+    "majorReworkPctDelta": 0
+  }
+}

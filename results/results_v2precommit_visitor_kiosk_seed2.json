@@ -1,0 +1,724 @@
+{
+  "metadata": {
+    "timestamp": "2026-05-26T13:19:50.635Z",
+    "provider": "anthropic-oauth",
+    "model": "claude-sonnet-4-6",
+    "designId": "visitor-kiosk-v1",
+    "designName": "Corporate Visitor Check-In Kiosk",
+    "enricherVersion": "1.0.0",
+    "ablationNote": "Second-application replication of the Specification Enrichment evaluation. The reference application here is a synthetic Corporate Visitor Check-In Kiosk authored for this study — explicitly NOT a well-known public reference like TodoMVC — so the baseline pipeline cannot benefit from pretraining memorization of the application semantics. Three configurations are compared at N=16 test cases each: (1) Baseline-16 (no enrichment, no category-diversity instruction), (2) Baseline-16-Enhanced (no enrichment, explicit category-diversity instruction), (3) Enriched-16 (enrichment stage in front of generator). Prompts are byte-identical to harness_count_matched.ts and harness_enhanced_baseline.ts; judge is the same two-ordering conservative aggregator from judge.ts. Generation and grading are done with claude-sonnet-4-6 at temperature 0 via Claude OAuth (claude -p)."
+  },
+  "baseline": {
+    "testCases": [
+      {
+        "id": "B1",
+        "title": "Complete standard check-in with all fields and photo",
+        "category": "happy-path"
+      },
+      {
+        "id": "B2",
+        "title": "Check in using pre-registration code",
+        "category": "happy-path"
+      },
+      {
+        "id": "B3",
+        "title": "Check in with photo skipped",
+        "category": "happy-path"
+      },
+      {
+        "id": "B4",
+        "title": "Retake photo before proceeding",
+        "category": "happy-path"
+      },
+      {
+        "id": "B5",
+        "title": "Submit visitor details form with Name field empty",
+        "category": "error-handling"
+      },
+      {
+        "id": "B6",
+        "title": "Submit visitor details with invalid host email format",
+        "category": "error-handling"
+      },
+      {
+        "id": "B7",
+        "title": "Submit visitor details with Host employee email field empty",
+        "category": "error-handling"
+      },
+      {
+        "id": "B8",
+        "title": "Complete check-in while kiosk is offline",
+        "category": "edge-case"
+      },
+      {
+        "id": "B9",
+        "title": "Verify offline check-in data syncs after connectivity is restored",
+        "category": "persistence"
+      },
+      {
+        "id": "B10",
+        "title": "Enter a pre-registration code that does not exist",
+        "category": "error-handling"
+      },
+      {
+        "id": "B11",
+        "title": "Badge prints successfully and printer status updates",
+        "category": "happy-path"
+      },
+      {
+        "id": "B12",
+        "title": "Check-in when printer is offline or out of paper",
+        "category": "error-handling"
+      },
+      {
+        "id": "B13",
+        "title": "Confirmation screen displays correct visitor name interpolation",
+        "category": "happy-path"
+      },
+      {
+        "id": "B14",
+        "title": "All four Purpose dropdown options are selectable",
+        "category": "edge-case"
+      },
+      {
+        "id": "B15",
+        "title": "Keyboard navigation and touch target accessibility on Visitor Details form",
+        "category": "accessibility"
+      },
+      {
+        "id": "B16",
+        "title": "Welcome screen displays company logo placeholder",
+        "category": "other"
+      }
+    ],
+    "grades": [
+      {
+        "testCaseId": "B1",
+        "verdict": "accepted-as-is",
+        "reason": "Covers the complete happy-path flow end-to-end with concrete preconditions, verifiable steps, and observable outcomes across all four screens including physical badge printing and host notification.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B2",
+        "verdict": "minor-edit",
+        "reason": "The preconditions and steps are sound but the expected outcome is vague about which screen is shown after code entry and does not specify whether the pre-populated fields are visible and editable, making the pass/fail criterion hard to evaluate objectively.",
+        "rawRun1": "minor-edit",
+        "rawRun2": "minor-edit",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B3",
+        "verdict": "accepted-as-is",
+        "reason": "The Skip button is explicitly present in the design, the preconditions and steps are fully specified, and the expected outcome is observable and correctly accounts for the photo-omission branch.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B4",
+        "verdict": "accepted-as-is",
+        "reason": "The retake flow is explicitly supported by the design (Retake button on Photo Capture screen) and the expected outcome is precise, observable, and covers a meaningful state-transition that must work correctly before shipping.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B5",
+        "verdict": "accepted-as-is",
+        "reason": "Name is the primary identifier for badge printing and host notification, making it a required field by any reasonable production implementation, and the expected outcome is specific and observable.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B6",
+        "verdict": "accepted-as-is",
+        "reason": "Email format validation is standard input validation behavior expected of any production form, the precondition and steps are clear and reproducible, and the expected outcome is specific and observable.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B7",
+        "verdict": "accepted-as-is",
+        "reason": "Host email is the primary routing field for host notification, making it a plausible required field, and the test has clear preconditions, unambiguous steps, and a specific observable expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B8",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly states offline-capable operation with periodic sync, making this a first-class scenario that must be verified end-to-end with precisely these observable outcomes.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B9",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly states offline-capable operation with periodic sync to a backend system, making this a critical integration test that directly validates a named architectural feature with clear, observable expected outcomes.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B10",
+        "verdict": "accepted-as-is",
+        "reason": "Error handling for an invalid pre-registration code is an essential, testable edge case fully consistent with the pre-registered flow implied by the design, with clear preconditions, unambiguous steps, and a verifiable expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B11",
+        "verdict": "minor-edit",
+        "reason": "The test is valid and directly grounded in the design, but step 3 and the expected outcome rely on an unspecified success-state message that the design does not define, making the observable pass/fail criterion vague and requiring a small clarification of what 'reflects print completion' looks like.",
+        "rawRun1": "minor-edit",
+        "rawRun2": "minor-edit",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B12",
+        "verdict": "accepted-as-is",
+        "reason": "Printer failure during badge issuance is a critical error-handling path for a kiosk that explicitly prints badges; the expected outcome is observable, the preconditions are actionable, and saving the check-in record despite printer failure is a reasonable implicit requirement for a production visitor-management system.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B13",
+        "verdict": "accepted-as-is",
+        "reason": "Directly verifies the named interpolation component on the Confirmation screen with a concrete input, observable expected output, and clear pass/fail criterion.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B14",
+        "verdict": "minor-edit",
+        "reason": "disagreement; conservative aggregate: The test is sound but step 2 mixes verification with interaction mid-step, and the expected outcome hedges downstream reflection with 'if applicable' rather than specifying a concrete observable result; splitting verification into a discrete check step and pinning the observable outcome would tighten it. | The test directly validates all four dropdown options defined in the design and confirms that a plausible edge-case value ('Other') does not break form submission or downstream flow.",
+        "rawRun1": "minor-edit",
+        "rawRun2": "accepted-as-is",
+        "agreed": false
+      },
+      {
+        "testCaseId": "B15",
+        "verdict": "accepted-as-is",
+        "reason": "Keyboard and accessible-input operability is a standard production requirement for kiosk software and the test is fully specified with clear preconditions, observable steps, and a concrete expected outcome covering focus order, visible indicators, and keyboard-only submission.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "B16",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly validates the Welcome screen's three defined components against the design spec, with a clear precondition and observable expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      }
+    ],
+    "summary": {
+      "total": 16,
+      "acceptedAsIs": 13,
+      "minorEdit": 3,
+      "majorRework": 0,
+      "acceptedAsIsPct": 81.3,
+      "minorEditPct": 18.8,
+      "majorReworkPct": 0,
+      "judgeAgreementPct": 93.8
+    },
+    "categoryDistribution": {
+      "happy-path": 6,
+      "edge-case": 2,
+      "error-handling": 5,
+      "accessibility": 1,
+      "persistence": 1,
+      "internationalization": 0,
+      "other": 1
+    }
+  },
+  "enhanced": {
+    "testCases": [
+      {
+        "id": "E1",
+        "title": "Complete check-in with photo prints badge and notifies host",
+        "category": "happy-path"
+      },
+      {
+        "id": "E2",
+        "title": "Check-in without photo still completes and prints badge",
+        "category": "happy-path"
+      },
+      {
+        "id": "E3",
+        "title": "Pre-registered visitor enters code and checks in",
+        "category": "happy-path"
+      },
+      {
+        "id": "E4",
+        "title": "All four Purpose dropdown options are selectable",
+        "category": "happy-path"
+      },
+      {
+        "id": "E5",
+        "title": "Visitor name containing non-Latin unicode characters is accepted and displayed correctly",
+        "category": "other"
+      },
+      {
+        "id": "E6",
+        "title": "Name field rejects or gracefully handles input exceeding maximum length",
+        "category": "edge-case"
+      },
+      {
+        "id": "E7",
+        "title": "Visitor retakes photo after initial capture before confirming",
+        "category": "edge-case"
+      },
+      {
+        "id": "E8",
+        "title": "Check-in completes and badge prints while kiosk is offline",
+        "category": "edge-case"
+      },
+      {
+        "id": "E9",
+        "title": "Submitting Visitor Details form with required fields empty shows validation errors",
+        "category": "error-handling"
+      },
+      {
+        "id": "E10",
+        "title": "Entering a malformed host email address triggers a format validation error",
+        "category": "error-handling"
+      },
+      {
+        "id": "E11",
+        "title": "Camera hardware unavailable presents a recoverable error on Photo Capture screen",
+        "category": "error-handling"
+      },
+      {
+        "id": "E12",
+        "title": "Badge printer failure shows an actionable error on the Confirmation screen",
+        "category": "error-handling"
+      },
+      {
+        "id": "E13",
+        "title": "Full check-in flow is navigable using only keyboard or switch-access controls",
+        "category": "accessibility"
+      },
+      {
+        "id": "E14",
+        "title": "Screen reader announces form field labels and button names correctly",
+        "category": "accessibility"
+      },
+      {
+        "id": "E15",
+        "title": "Refreshing or restarting the app mid-flow returns kiosk to the Welcome screen",
+        "category": "persistence"
+      },
+      {
+        "id": "E16",
+        "title": "Check-in records captured offline are synced to backend when connectivity is restored",
+        "category": "persistence"
+      }
+    ],
+    "grades": [
+      {
+        "testCaseId": "E1",
+        "verdict": "accepted-as-is",
+        "reason": "Covers the complete golden-path flow end-to-end, preconditions are explicit and sufficient, steps map directly to the design's screen sequence, and the expected outcome is fully observable (on-screen message, physical badge, host notification).",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E2",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly includes a 'Skip' button on the Photo Capture screen, making this a first-class supported path, and the expected outcome covers all observable confirmation-screen behaviors plus downstream badge printing and host notification.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E3",
+        "verdict": "minor-edit",
+        "reason": "The test is well-scoped and the expected outcome is correct in spirit, but step 4 ('Observe the resulting screen and flow') is not a concrete, observable action and the expected result omits what happens if photo capture is still required versus skipped, leaving the terminal state ambiguous.",
+        "rawRun1": "minor-edit",
+        "rawRun2": "minor-edit",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E4",
+        "verdict": "accepted-as-is",
+        "reason": "The test directly validates all four designed dropdown options are present and selectable, with a clear precondition, observable steps, and verifiable expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E5",
+        "verdict": "accepted-as-is",
+        "reason": "Unicode name handling is a real production concern for a corporate kiosk with international visitors, the preconditions and steps are concrete and complete, and the expected outcome is specific and observable.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E6",
+        "verdict": "accepted-as-is",
+        "reason": "Long-string input handling is a standard edge case for any form-based production application, the precondition is specific, the steps are reproducible, and the expected outcome covers both valid truncation and validation-error paths without contradicting the design.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E7",
+        "verdict": "accepted-as-is",
+        "reason": "The retake flow is explicitly supported by the design's 'Retake' button, the steps are unambiguous and reproducible, and the expected outcome—second photo supersedes first with no remnant—is a correct and observable postcondition for a production photo-capture workflow.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E8",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly states offline-capable operation with periodic sync, making this a first-class functional requirement that any production implementation must satisfy, and the test case has clear preconditions, observable steps, and a specific, verifiable expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E9",
+        "verdict": "minor-edit",
+        "reason": "The test is valid and well-structured, but the design does not explicitly mark any fields as required, so the precondition should acknowledge that assumption and the expected outcome should be softened slightly to account for implementations that may show a single summary error rather than inline per-field errors.",
+        "rawRun1": "minor-edit",
+        "rawRun2": "minor-edit",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E10",
+        "verdict": "accepted-as-is",
+        "reason": "Email format validation on a host address field is a standard, expected behavior for any production form; the preconditions, steps, and observable expected outcomes (form blocked, inline error, no notification sent) are all concrete and testable.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E11",
+        "verdict": "accepted-as-is",
+        "reason": "Camera hardware failure is a realistic production edge case for a tablet kiosk, the preconditions are specific and reproducible, and the expected outcomes are observable and directly tied to design elements (viewfinder, Skip button, Confirmation flow).",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E12",
+        "verdict": "accepted-as-is",
+        "reason": "Printer failure handling is a critical production concern for a badge-printing kiosk, the preconditions are specific and reproducible, the expected outcomes are concrete and observable, and the test correctly distinguishes badge printing from host notification as independent subsystems.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E13",
+        "verdict": "accepted-as-is",
+        "reason": "Keyboard/switch-access navigability is a standard accessibility requirement for any production tablet kiosk deployed in a corporate environment, the preconditions are concrete, the steps map directly to the documented screens and controls, and the expected outcome is specific and observable.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E14",
+        "verdict": "accepted-as-is",
+        "reason": "Accessibility via screen reader support is a standard implicit requirement for public-facing kiosk software, and this test case specifies concrete, observable expected outcomes for each field type including the dropdown role.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E15",
+        "verdict": "accepted-as-is",
+        "reason": "Session-isolation on restart is a standard security and privacy requirement for a shared kiosk handling PII, and the test is fully specified with observable preconditions, concrete steps, and a verifiable expected outcome.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E16",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly states offline-capable operation with periodic backend sync, making this a direct test of a core architectural feature with clear, observable pass/fail criteria covering the full record payload and deduplication behavior.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      }
+    ],
+    "summary": {
+      "total": 16,
+      "acceptedAsIs": 14,
+      "minorEdit": 2,
+      "majorRework": 0,
+      "acceptedAsIsPct": 87.5,
+      "minorEditPct": 12.5,
+      "majorReworkPct": 0,
+      "judgeAgreementPct": 100
+    },
+    "categoryDistribution": {
+      "happy-path": 4,
+      "edge-case": 3,
+      "error-handling": 4,
+      "accessibility": 2,
+      "persistence": 2,
+      "internationalization": 0,
+      "other": 1
+    }
+  },
+  "enriched": {
+    "derivedConstraints": 8,
+    "reviewQuestions": 7,
+    "testCases": [
+      {
+        "id": "E1",
+        "title": "Complete check-in with photo capture and badge print",
+        "category": "happy-path"
+      },
+      {
+        "id": "E2",
+        "title": "Complete check-in by skipping photo capture",
+        "category": "happy-path"
+      },
+      {
+        "id": "E3",
+        "title": "Reject host email not found in internal employee directory",
+        "category": "error-handling"
+      },
+      {
+        "id": "E4",
+        "title": "Pre-registration code lookup pre-populates visitor details",
+        "category": "happy-path"
+      },
+      {
+        "id": "E5",
+        "title": "Invalid pre-registration code shows error and does not advance",
+        "category": "error-handling"
+      },
+      {
+        "id": "E6",
+        "title": "Badge printer failure surfaces an explicit error state",
+        "category": "error-handling"
+      },
+      {
+        "id": "E7",
+        "title": "Check-in queues locally when kiosk is offline",
+        "category": "persistence"
+      },
+      {
+        "id": "E8",
+        "title": "Queued offline check-ins sync automatically when connectivity is restored",
+        "category": "persistence"
+      },
+      {
+        "id": "E9",
+        "title": "Session timeout on Visitor Details screen returns kiosk to Welcome",
+        "category": "edge-case"
+      },
+      {
+        "id": "E10",
+        "title": "Session timeout on Photo Capture screen returns kiosk to Welcome",
+        "category": "edge-case"
+      },
+      {
+        "id": "E11",
+        "title": "Host notification failure does not block visitor check-in completion",
+        "category": "error-handling"
+      },
+      {
+        "id": "E12",
+        "title": "Completed check-in record persists to backend with all required fields",
+        "category": "persistence"
+      },
+      {
+        "id": "E13",
+        "title": "Submitting Visitor Details form with blank Name field shows validation error",
+        "category": "edge-case"
+      },
+      {
+        "id": "E14",
+        "title": "Photo retake replaces first captured image on the printed badge",
+        "category": "edge-case"
+      },
+      {
+        "id": "E15",
+        "title": "Pre-registration code lookup uses local cache when kiosk is offline",
+        "category": "edge-case"
+      },
+      {
+        "id": "E16",
+        "title": "All interactive form elements have visible labels and meet minimum touch-target size",
+        "category": "accessibility"
+      }
+    ],
+    "grades": [
+      {
+        "testCaseId": "E1",
+        "verdict": "accepted-as-is",
+        "reason": "Covers the complete happy-path flow end-to-end with well-specified preconditions, concrete steps matching the design's screen sequence, and verifiable expected outcomes including name interpolation, badge printing with photo, and host notification.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E2",
+        "verdict": "accepted-as-is",
+        "reason": "The skip button is explicitly present in the Photo Capture screen design, and verifying that the full check-in flow completes without a photo—including successful badge printing and a clean confirmation screen—is a legitimate and well-specified happy-path test.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E3",
+        "verdict": "minor-edit",
+        "reason": "disagreement; conservative aggregate: Directory validation on host email is a standard implicit behavior for any production visitor-management system that must notify the host, the preconditions are explicit and complete, and the expected outcome is specific and observable. | The behavior under test (validating host email against a live directory) is a plausible and expected production feature, but the design does not mention a directory lookup or what constitutes a valid host email, so the precondition should note this is testing an implicit/assumed backend validation, and the expected outcome should account for the offline-capable nature of the kiosk (directory lookup may not be possible offline), making the 'kiosk is online' precondition load-bearing and worth explicitly calling out as a constraint on when this test is valid.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "minor-edit",
+        "agreed": false
+      },
+      {
+        "testCaseId": "E4",
+        "verdict": "accepted-as-is",
+        "reason": "The pre-registration flow is explicitly surfaced in the design via the 'Pre-registered? Enter code' button, and pre-populating the Visitor Details form from a backend lookup is the only sensible implementation of that feature; the preconditions, steps, and expected outcome are fully observable and complete.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E5",
+        "verdict": "accepted-as-is",
+        "reason": "The pre-registration flow is explicitly part of the design, and validating that an invalid/expired code produces an error without advancing the flow is a well-formed, fully observable, and production-critical error-handling test.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E6",
+        "verdict": "minor-edit",
+        "reason": "disagreement; conservative aggregate: The test case covers a valid and important implicit behavior for a production kiosk, but the precondition for the host email lacks specificity about what 'exists in internal directory' means in offline mode, and the expected outcome doesn't address whether the host notification still fires or is queued—both observable states worth pinning down. | Badge printer failure is a realistic and critical error path for a kiosk that explicitly states badge printing as a core output; the preconditions are concrete, the steps are reproducible, and the expected outcome is specific and observable.",
+        "rawRun1": "minor-edit",
+        "rawRun2": "accepted-as-is",
+        "agreed": false
+      },
+      {
+        "testCaseId": "E7",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly states offline-capable operation with periodic sync, making local queue persistence a core, testable requirement, and the expected outcomes are concrete and observable.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E8",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly states offline-capable operation with periodic sync to a backend, making this a direct, well-specified, and observable test of that core feature.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E9",
+        "verdict": "accepted-as-is",
+        "reason": "Session timeout with form reset is a standard and expected security/hygiene behavior for a public-facing kiosk application, and the test is fully specified with observable preconditions, steps, and outcomes.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E10",
+        "verdict": "accepted-as-is",
+        "reason": "Session timeout with automatic return to Welcome and discard of partial data is a standard, expected behavior for any unattended kiosk and is directly testable with the preconditions and observable outcomes as written.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E11",
+        "verdict": "accepted-as-is",
+        "reason": "Tests a critical resilience requirement — decoupling badge issuance from notification delivery — that is strongly implied by the offline-capable, kiosk-in-a-lobby design and represents a realistic, high-impact production failure mode with fully observable expected outcomes.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E12",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly describes periodic sync to a backend visitor-management system, making backend persistence a core requirement, and this test verifies all semantically necessary fields (name, photo, badge ID, timestamp) with a clear, observable pass/fail criterion.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E13",
+        "verdict": "accepted-as-is",
+        "reason": "Required-field validation on Name is a standard implicit behavior for any production form, the precondition is clear, the steps are reproducible, and all three observable outcomes (inline error, no navigation, no backend submission) are specific and verifiable.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E14",
+        "verdict": "minor-edit",
+        "reason": "disagreement; conservative aggregate: The core test logic is sound and directly exercises the Retake button's functional contract, but the precondition omits that visitor details must already be completed, and the expected outcome's claim that the first photo is 'not stored in the visitor record' is unverifiable at the kiosk UI level without access to backend records. | The retake flow is explicitly designed into the Photo Capture screen and the expected outcome—second photo used, first discarded from both badge and record—is precise, observable, and tests a real data-integrity edge case critical for a visitor management system.",
+        "rawRun1": "minor-edit",
+        "rawRun2": "accepted-as-is",
+        "agreed": false
+      },
+      {
+        "testCaseId": "E15",
+        "verdict": "accepted-as-is",
+        "reason": "The design explicitly calls out offline-capable operation with periodic sync, making local cache lookup for pre-registered codes a core, testable behavior that this case covers precisely and completely.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      },
+      {
+        "testCaseId": "E16",
+        "verdict": "accepted-as-is",
+        "reason": "The test covers real WCAG/mobile accessibility requirements (visible labels, 44×44pt touch targets, logical focus order) that are expected of any production tablet kiosk and are fully consistent with the design's described form fields and buttons.",
+        "rawRun1": "accepted-as-is",
+        "rawRun2": "accepted-as-is",
+        "agreed": true
+      }
+    ],
+    "summary": {
+      "total": 16,
+      "acceptedAsIs": 13,
+      "minorEdit": 3,
+      "majorRework": 0,
+      "acceptedAsIsPct": 81.3,
+      "minorEditPct": 18.8,
+      "majorReworkPct": 0,
+      "judgeAgreementPct": 81.3
+    },
+    "categoryDistribution": {
+      "happy-path": 3,
+      "edge-case": 5,
+      "error-handling": 4,
+      "accessibility": 1,
+      "persistence": 3,
+      "internationalization": 0,
+      "other": 0
+    }
+  },
+  "delta": {
+    "baselineVsEnriched": {
+      "acceptedAsIsPctDelta": 0,
+      "minorEditPctDelta": 0,
+      "majorReworkPctDelta": 0
+    },
+    "enhancedVsEnriched": {
+      "acceptedAsIsPctDelta": -6.200000000000003,
+      "minorEditPctDelta": 6.300000000000001,
+      "majorReworkPctDelta": 0
+    }
+  }
+}

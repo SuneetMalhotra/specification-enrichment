@@ -31,7 +31,8 @@
     "harness:visitor_kiosk": "tsx harness_visitor_kiosk.ts",
     "harness:multi_seed": "tsx harness_multi_seed.ts",
     "harness:all": "npm run harness:anthropic && npm run harness:count_matched && npm run harness:enhanced && npm run harness:threshold_sweep && npm run harness:visitor_kiosk && npm run harness:multi_seed",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",

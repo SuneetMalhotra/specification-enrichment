@@ -1,0 +1,232 @@
+{
+  "metadata": {
+    "timestamp": "2026-05-25T18:11:55.479Z",
+    "provider": "anthropic-oauth",
+    "model": "claude-sonnet-4-6",
+    "designId": "todomvc-public-1",
+    "designName": "TodoMVC",
+    "ablationNote": "Enhanced baseline at N=16, generated with the same baseline prompt as the N=16 count-matched harness PLUS an explicit category-diversity instruction (at least one accessibility test, one persistence test, one internationalization test, one error-handling test). Tests the hypothesis that an informed practitioner could close the category-coverage gap by hand-coding the categories the enrichment stage discovers automatically."
+  },
+  "testCases": [
+    {
+      "id": "E1",
+      "title": "Add a new todo by pressing Enter",
+      "category": "happy-path"
+    },
+    {
+      "id": "E2",
+      "title": "Mark an active todo as complete via checkbox",
+      "category": "happy-path"
+    },
+    {
+      "id": "E3",
+      "title": "Uncheck a completed todo to mark it active again",
+      "category": "happy-path"
+    },
+    {
+      "id": "E4",
+      "title": "Delete a todo using the destroy button",
+      "category": "happy-path"
+    },
+    {
+      "id": "E5",
+      "title": "Filter Active shows only incomplete todos",
+      "category": "happy-path"
+    },
+    {
+      "id": "E6",
+      "title": "Filter Completed shows only completed todos",
+      "category": "happy-path"
+    },
+    {
+      "id": "E7",
+      "title": "Filter All restores full list after filtering",
+      "category": "happy-path"
+    },
+    {
+      "id": "E8",
+      "title": "Clear Completed removes all completed todos",
+      "category": "happy-path"
+    },
+    {
+      "id": "E9",
+      "title": "Footer is hidden when no todos exist",
+      "category": "edge-case"
+    },
+    {
+      "id": "E10",
+      "title": "Clear Completed button is hidden when no completed todos exist",
+      "category": "edge-case"
+    },
+    {
+      "id": "E11",
+      "title": "Submitting an empty input does not create a todo",
+      "category": "error-handling"
+    },
+    {
+      "id": "E12",
+      "title": "Submitting whitespace-only input does not create a todo",
+      "category": "error-handling"
+    },
+    {
+      "id": "E13",
+      "title": "Special characters and HTML are stored as literal text",
+      "category": "error-handling"
+    },
+    {
+      "id": "E14",
+      "title": "Filter links are keyboard-navigable and operable",
+      "category": "accessibility"
+    },
+    {
+      "id": "E15",
+      "title": "Todos persist after a full browser page refresh",
+      "category": "persistence"
+    },
+    {
+      "id": "E16",
+      "title": "Right-to-left Unicode text renders correctly as a todo label",
+      "category": "other"
+    }
+  ],
+  "grades": [
+    {
+      "testCaseId": "E1",
+      "verdict": "accepted-as-is",
+      "reason": "The test covers the primary creation flow end-to-end with specific, observable expected outcomes that match the design exactly, including input clearing, footer visibility, and correct singular item count.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E2",
+      "verdict": "accepted-as-is",
+      "reason": "The test covers the core completion interaction with three distinct, observable outcomes (checkbox state, strikethrough styling, count decrement) that are all consistent with the TodoMVC design.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E3",
+      "verdict": "accepted-as-is",
+      "reason": "The test case correctly covers the toggle-back behavior of a completed todo, with clear preconditions, observable steps, and a precisely specified expected outcome including the count change.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E4",
+      "verdict": "accepted-as-is",
+      "reason": "The test case correctly covers the destroy button interaction, its hover-visibility precondition, and verifies both the item removal and the footer hiding when no todos remain.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E5",
+      "verdict": "accepted-as-is",
+      "reason": "The test case has clear preconditions, unambiguous steps, and a fully observable expected outcome that directly validates a core filtering feature explicitly defined in the design.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E6",
+      "verdict": "accepted-as-is",
+      "reason": "The test case precisely exercises the Completed filter with a mixed-state list, verifies correct item visibility, and checks filter selection state — all observable behaviors consistent with the design.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E7",
+      "verdict": "accepted-as-is",
+      "reason": "The test case has clear preconditions, unambiguous steps, and a fully observable expected outcome that directly validates the 'All' filter's core behavior of restoring the full list after a narrower filter was applied.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E8",
+      "verdict": "accepted-as-is",
+      "reason": "The test case directly exercises the Clear completed button's documented behavior with a concrete multi-item precondition and verifiable expected outcomes including button disappearance.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E9",
+      "verdict": "accepted-as-is",
+      "reason": "The test directly verifies the design's explicit rule that the footer is only visible when at least one todo exists, and uses a valid, reproducible path to reach the zero-todo state.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E10",
+      "verdict": "accepted-as-is",
+      "reason": "The test directly verifies an explicitly specified visibility rule from the design ('when at least one completed todo exists') with clear preconditions and an observable expected outcome.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E11",
+      "verdict": "accepted-as-is",
+      "reason": "Empty input rejection is a canonical TodoMVC behavior, the preconditions are clear, the steps are reproducible, and all three expected outcomes are independently observable.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E12",
+      "verdict": "minor-edit",
+      "reason": "The test is valid and highly plausible for production implementations, but the expected outcome is slightly ambiguous on whether the input should be cleared or remain blank — a concrete observable outcome should be specified.",
+      "rawRun1": "minor-edit",
+      "rawRun2": "minor-edit",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E13",
+      "verdict": "accepted-as-is",
+      "reason": "XSS prevention is a standard implicit requirement for any web application that renders user-supplied text, and the expected outcome is precise and observable.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E14",
+      "verdict": "accepted-as-is",
+      "reason": "Keyboard navigability and operability of filter controls is a standard WCAG accessibility requirement for production web apps, the preconditions are well-defined, the steps are unambiguous and reproducible, and the expected outcomes are specific and observable.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E15",
+      "verdict": "accepted-as-is",
+      "reason": "Persistence across page reload is a standard implicit requirement for a production todo app and is in fact part of the canonical TodoMVC spec; the preconditions, steps, and expected outcomes are fully observable and unambiguous.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    },
+    {
+      "testCaseId": "E16",
+      "verdict": "accepted-as-is",
+      "reason": "RTL Unicode rendering is a standard i18n concern for any production web app, the preconditions are clear, the steps are reproducible, and the expected outcome is specific and observable.",
+      "rawRun1": "accepted-as-is",
+      "rawRun2": "accepted-as-is",
+      "agreed": true
+    }
+  ],
+  "summary": {
+    "total": 16,
+    "acceptedAsIs": 15,
+    "minorEdit": 1,
+    "majorRework": 0,
+    "acceptedAsIsPct": 93.8,
+    "minorEditPct": 6.3,
+    "majorReworkPct": 0,
+    "judgeAgreementPct": 100
+  }
+}

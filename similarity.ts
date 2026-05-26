@@ -1,5 +1,5 @@
 // similarity.ts — cosine similarity over sentence embeddings for the
-// "materially changed" merge predicate (§3.3 of the article).
+// "materially changed" merge predicate (§3.2 of the article).
 //
 // The default implementation throws a clear error pointing the operator at
 // the configuration step; production users supply an embedding function

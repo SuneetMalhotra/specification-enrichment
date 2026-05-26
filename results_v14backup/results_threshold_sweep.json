@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "timestamp": "2026-05-25T16:53:28.752Z",
+    "provider": "anthropic-oauth",
+    "model": "claude-sonnet-4-6",
+    "designId": "todomvc-public-1",
+    "designName": "TodoMVC",
+    "sweepNote": "Single enrichment run; re-bucketed at each threshold; test-case generation regenerated per threshold; no grading (category coverage observable on the generated test cases)."
+  },
+  "totalConstraints": 15,
+  "confidences": [
+    {
+      "id": "C1",
+      "confidence": 0.95,
+      "category": "validation"
+    },
+    {
+      "id": "C2",
+      "confidence": 0.82,
+      "category": "validation"
+    },
+    {
+      "id": "C3",
+      "confidence": 0.97,
+      "category": "other"
+    },
+    {
+      "id": "C4",
+      "confidence": 0.88,
+      "category": "internationalization"
+    },
+    {
+      "id": "C5",
+      "confidence": 0.9,
+      "category": "other"
+    },
+    {
+      "id": "C6",
+      "confidence": 0.85,
+      "category": "edge-case"
+    },
+    {
+      "id": "C7",
+      "confidence": 0.92,
+      "category": "edge-case"
+    },
+    {
+      "id": "C8",
+      "confidence": 0.88,
+      "category": "accessibility"
+    },
+    {
+      "id": "C9",
+      "confidence": 0.65,
+      "category": "persistence"
+    },
+    {
+      "id": "C10",
+      "confidence": 0.6,
+      "category": "persistence"
+    },
+    {
+      "id": "C11",
+      "confidence": 0.55,
+      "category": "other"
+    },
+    {
+      "id": "C12",
+      "confidence": 0.72,
+      "category": "other"
+    },
+    {
+      "id": "C13",
+      "confidence": 0.6,
+      "category": "other"
+    },
+    {
+      "id": "C14",
+      "confidence": 0.45,
+      "category": "validation"
+    },
+    {
+      "id": "C15",
+      "confidence": 0.35,
+      "category": "internationalization"
+    }
+  ],
+  "sweep": [
+    {
+      "threshold": 0.5,
+      "silentConstraints": 13,
+      "reviewQuestions": 2,
+      "testCases": 16,
+      "categories": {
+        "happy-path": 4,
+        "error-handling": 2,
+        "edge-case": 3,
+        "other": 5,
+        "persistence": 2
+      },
+      "hasAccessibility": false,
+      "hasPersistence": true,
+      "edgeCaseCount": 3
+    },
+    {
+      "threshold": 0.6,
+      "silentConstraints": 12,
+      "reviewQuestions": 3,
+      "testCases": 16,
+      "categories": {
+        "happy-path": 7,
+        "other": 1,
+        "edge-case": 4,
+        "error-handling": 2,
+        "accessibility": 1,
+        "persistence": 1
+      },
+      "hasAccessibility": true,
+      "hasPersistence": true,
+      "edgeCaseCount": 4
+    },
+    {
+      "threshold": 0.7,
+      "silentConstraints": 9,
+      "reviewQuestions": 6,
+      "testCases": 16,
+      "categories": {
+        "happy-path": 5,
+        "error-handling": 1,
+        "edge-case": 4,
+        "other": 5,
+        "accessibility": 1
+      },
+      "hasAccessibility": true,
+      "hasPersistence": false,
+      "edgeCaseCount": 4
+    },
+    {
+      "threshold": 0.8,
+      "silentConstraints": 8,
+      "reviewQuestions": 7,
+      "testCases": 16,
+      "categories": {
+        "happy-path": 6,
+        "error-handling": 2,
+        "edge-case": 5,
+        "other": 2,
+        "accessibility": 1
+      },
+      "hasAccessibility": true,
+      "hasPersistence": false,
+      "edgeCaseCount": 5
+    },
+    {
+      "threshold": 0.9,
+      "silentConstraints": 4,
+      "reviewQuestions": 11,
+      "testCases": 16,
+      "categories": {
+        "happy-path": 7,
+        "edge-case": 7,
+        "error-handling": 1,
+        "persistence": 1
+      },
+      "hasAccessibility": false,
+      "hasPersistence": true,
+      "edgeCaseCount": 7
+    }
+  ]
+}

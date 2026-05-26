@@ -151,7 +151,7 @@ async function main() {
       name: 'Enriched-16',
       seed,
       runner: async () => {
-        const enricher = new SpecificationEnricher({ provider, threshold: 0.7 });
+        const enricher = new SpecificationEnricher({ provider, confidenceThreshold: 0.7 });
         const spec = await enricher.enrich(TODOMVC_DESIGN);
         return await generateEnriched(provider, spec);
       },

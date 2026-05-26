@@ -177,8 +177,14 @@ async function generateBaseline16Enhanced(provider: ModelProvider): Promise<Test
 
 // --- checkpointing ------------------------------------------------------
 
+// SEED is a label, not a knob. The model provider (claude -p) has no seed
+// flag and GenerateOptions has no seed field. When SEED env var is set, we
+// only suffix file paths so independent re-runs do not collide. Experimental
+// conditions (prompts, temperature, model, judge) are unchanged.
+const SEED_LABEL = process.env.SEED ? `_seed${process.env.SEED}` : '';
+
 function cpPath(stage: string): string {
-  return join(process.cwd(), `.harness-checkpoint-visitor-kiosk-${stage}.json`);
+  return join(process.cwd(), `.harness-checkpoint-visitor-kiosk-${stage}${SEED_LABEL}.json`);
 }
 
 function loadCp<T>(stage: string): T | null {
@@ -238,7 +244,7 @@ async function main() {
   const design = VISITOR_KIOSK_DESIGN;
 
   console.log(
-    `\n=== harness_visitor_kiosk === provider=${provider.name} model=claude-sonnet-4-6 design=${design.name}\n`,
+    `\n=== harness_visitor_kiosk === provider=${provider.name} model=claude-sonnet-4-6 design=${design.name} seed=${process.env.SEED ?? '(unset)'}\n`,
   );
 
   // 1. Baseline-16
@@ -385,7 +391,7 @@ async function main() {
     },
   };
 
-  const outPath = join(process.cwd(), 'results', 'results_visitor_kiosk.json');
+  const outPath = join(process.cwd(), 'results', `results_visitor_kiosk${SEED_LABEL}.json`);
   writeFileSync(outPath, JSON.stringify(out, null, 2));
   console.log(`\nresults written to ${outPath}\n`);
 

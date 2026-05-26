@@ -6,8 +6,6 @@ Companion code for the IEEE Software Practice column article:
 
 > Malhotra, S. "Specification Enrichment: Using LLMs to Surface Implicit Constraints in Design-to-Test Pipelines." 2026.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 ---
 
 ## What this is
@@ -55,6 +53,7 @@ src/
 
 ```bash
 npm install
+npm run typecheck               # strict-mode TypeScript check (tsc --noEmit)
 npm run example                 # offline demo with the stub provider
 npm run harness:stub            # full harness run with stub (deterministic; same numbers every time)
 npm run harness:anthropic       # full harness run using `claude -p` (requires Claude OAuth)
@@ -114,4 +113,4 @@ The author is Senior Manager, Test Engineering at Motorola Solutions. This work,
 
 ## License
 
-MIT. See `LICENSE`.
+All rights reserved. © 2026 Suneet Malhotra. This repository is published for review and reproducibility of the companion article; no license is granted for redistribution or derivative works.

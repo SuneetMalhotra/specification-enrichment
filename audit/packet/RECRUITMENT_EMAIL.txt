@@ -1,0 +1,16 @@
+Subject: 15-min favor: rate 25 LLM-generated test cases for a peer-reviewed study
+
+Hi [NAME],
+
+Paper of mine is under review at IEEE Software on LLM-generated test plans. A reviewer flagged that the only quality signal is self-graded (same model writes and judges the tests). To close that gap I need two senior QA reviewers to rate a small sample so I can report human acceptance rates and inter-rater agreement (Cohen's kappa).
+
+The ask: 25 short black-box test cases for a generic TodoMVC-style task app. For each, pick a verdict from a three-bucket rubric (accepted-as-is / minor-edit / major-rework) plus two sentences of justification. Total time: 10-15 minutes. You rate blind to which pipeline produced each case; rubric, instructions, and pre-formatted CSV ship in the packet.
+
+Asking you specifically because of your test-architect background and your judgment on what belongs in a shipping plan.
+
+If willing to be named, I will acknowledge you in the article (initials or full name). Anonymous is fine too. Filled CSVs go into the public companion repository so the audit is reproducible.
+
+Turnaround target: 7-10 days. Reply yes and I send the packet; reply no and no worries.
+
+Thanks,
+Suneet

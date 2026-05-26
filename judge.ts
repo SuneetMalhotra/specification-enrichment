@@ -14,7 +14,6 @@
 // raw grades in results.json for inspection. The judge prompt is content-
 // addressed and pinned so grades are reproducible.
 //
-// MIT License.
 
 import { ModelProvider } from './providers/types';
 import { DesignArtifact } from './types';

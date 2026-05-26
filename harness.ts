@@ -9,14 +9,19 @@
 //   npx tsx harness.ts
 //   npx tsx harness.ts --provider stub      # offline run, deterministic
 //   npx tsx harness.ts --provider anthropic # uses claude -p OAuth
+//   npx tsx harness.ts --provider ollama    # local weights via `ollama serve`
+//   npx tsx harness.ts --provider openai    # hosted OpenAI (requires OPENAI_API_KEY)
+//   npx tsx harness.ts --provider gemini    # hosted Gemini (requires GOOGLE_API_KEY)
 //
-// MIT License.
 
 import { writeFileSync, existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { ModelProvider } from './providers/types';
 import { StubProvider } from './providers/stub';
 import { AnthropicProvider } from './providers/anthropic';
+import { OllamaProvider } from './providers/ollama';
+import { OpenAIProvider } from './providers/openai';
+import { GeminiProvider } from './providers/gemini';
 import { generateBaseline, runEnrichedPipeline, TestCase } from './pipeline';
 import { gradeTestCase, summarize, Grade } from './judge';
 import { TODOMVC_DESIGN } from './designs/todomvc';
@@ -62,7 +67,19 @@ function pickProvider(arg: string | undefined): { provider: ModelProvider; model
   if (arg === 'anthropic') {
     return { provider: new AnthropicProvider({ model: 'claude-sonnet-4-6' }), model: 'claude-sonnet-4-6' };
   }
-  throw new Error(`Unknown provider: ${arg}. Use 'stub' or 'anthropic'.`);
+  if (arg === 'ollama') {
+    const model = process.env.OLLAMA_MODEL ?? 'llama3.2';
+    return { provider: new OllamaProvider({ model }), model };
+  }
+  if (arg === 'openai') {
+    const model = process.env.MODEL ?? 'gpt-4.1';
+    return { provider: new OpenAIProvider({ model }), model };
+  }
+  if (arg === 'gemini') {
+    const model = process.env.MODEL ?? 'gemini-2.5-pro';
+    return { provider: new GeminiProvider({ model }), model };
+  }
+  throw new Error(`Unknown provider: ${arg}. Use 'stub', 'anthropic', 'ollama', 'openai', or 'gemini'.`);
 }
 
 async function gradeAll(

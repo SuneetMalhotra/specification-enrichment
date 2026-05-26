@@ -1,5 +1,4 @@
 // examples/run-example.ts — end-to-end demo using the stub provider.
-// MIT License.
 
 import { SpecificationEnricher } from '../enricher';
 import { StubProvider } from '../providers/stub';

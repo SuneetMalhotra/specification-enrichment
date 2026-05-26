@@ -3,7 +3,6 @@
 // This file is part of the companion code for the article
 // "Specification Enrichment: Using LLMs to Surface Implicit
 // Constraints in Design-to-Test Pipelines."
-// MIT License.
 
 import { ModelProvider } from './providers/types';
 import { META_PROMPT } from './meta-prompt';

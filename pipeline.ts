@@ -3,7 +3,6 @@
 // Baseline:  DesignArtifact -> [LLM gen] -> TestCase[]
 // Enriched:  DesignArtifact -> [Enrichment] -> EnrichedSpec -> [LLM gen] -> TestCase[]
 //
-// MIT License.
 
 import { ModelProvider } from './providers/types';
 import { SpecificationEnricher } from './enricher';

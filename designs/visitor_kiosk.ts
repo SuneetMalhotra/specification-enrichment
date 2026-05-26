@@ -14,7 +14,6 @@
 // recovery, duplicate check-in, language toggle, etc.) are deliberately
 // omitted so the enrichment stage has implicit constraints to surface.
 //
-// MIT License.
 
 import { DesignArtifact } from '../types';
 

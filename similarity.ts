@@ -7,7 +7,6 @@
 // strings to fixed-dimension vectors). The interface is small and
 // provider-agnostic to match the rest of the codebase.
 //
-// MIT License.
 
 export type EmbeddingFn = (text: string) => Promise<number[]>;
 

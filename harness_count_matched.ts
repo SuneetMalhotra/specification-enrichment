@@ -8,7 +8,6 @@
 // Usage:
 //   npx tsx harness_count_matched.ts
 //
-// MIT License.
 
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';

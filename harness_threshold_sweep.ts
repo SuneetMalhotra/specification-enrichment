@@ -10,7 +10,6 @@
 // IEEE reviewer asked for category coverage, which is observable on the
 // generated test cases without grading).
 //
-// MIT License.
 
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';

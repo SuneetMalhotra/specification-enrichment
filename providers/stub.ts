@@ -6,7 +6,6 @@
 // for the enriched pipeline, so the demo headline mirrors the directional
 // finding in the article without depending on a network call.
 //
-// MIT License.
 
 import { ModelProvider, GenerateOptions } from './types';
 

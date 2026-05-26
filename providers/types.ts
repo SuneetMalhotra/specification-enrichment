@@ -1,5 +1,4 @@
 // providers/types.ts — the model provider interface.
-// MIT License.
 
 export interface GenerateOptions {
   system: string;

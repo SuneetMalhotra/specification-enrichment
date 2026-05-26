@@ -4,7 +4,6 @@
 // Stub implementation. See providers/openai.ts for the rationale; this file
 // is the symmetric Gemini variant.
 //
-// MIT License.
 
 import { ModelProvider, GenerateOptions } from './types';
 

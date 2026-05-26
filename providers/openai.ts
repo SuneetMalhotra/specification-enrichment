@@ -7,7 +7,6 @@
 // configuration. The article's reproducibility statement (§6.1) documents
 // the exact command surface this stub exposes.
 //
-// MIT License.
 
 import { ModelProvider, GenerateOptions } from './types';
 

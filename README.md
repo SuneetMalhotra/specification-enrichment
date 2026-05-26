@@ -57,9 +57,33 @@ npm run typecheck               # strict-mode TypeScript check (tsc --noEmit)
 npm run example                 # offline demo with the stub provider
 npm run harness:stub            # full harness run with stub (deterministic; same numbers every time)
 npm run harness:anthropic       # full harness run using `claude -p` (requires Claude OAuth)
+npx tsx harness.ts --provider ollama   # full harness run against local Ollama (no API key, open weights)
+npx tsx harness.ts --provider openai   # requires OPENAI_API_KEY
+npx tsx harness.ts --provider gemini   # requires GOOGLE_API_KEY
 ```
 
-The `anthropic` runs require [Claude Code](https://docs.claude.com/en/docs/claude-code) installed at `~/.local/bin/claude` and an authenticated OAuth session. No API key is read or required. To install Claude Code, see [claude.com/code](https://www.claude.com/code).
+The `anthropic` runs require [Claude Code](https://docs.claude.com/en/docs/claude-code) installed at `~/.local/bin/claude` and an authenticated OAuth session. No API key is read or required.
+
+### Running against open-weights models via Ollama
+
+The `providers/ollama.ts` adapter routes generation through a local [Ollama](https://ollama.com) server, so the enrichment stage can be reproduced against open-weights Llama-family models (and any other Ollama-compatible model: Mistral, Qwen, CodeLlama). This is the open-weights complement to the hosted-model paths above and follows the open-weights LLM-testing pattern demonstrated in [Rehan et al. 2025](https://github.com/Shaheer-Rehan/Llama-2-for-Software-Testing).
+
+```bash
+# one-time setup
+brew install ollama          # or download from https://ollama.com/download
+ollama serve &               # start the local API on http://localhost:11434
+ollama pull llama3.2         # ~2 GB; substitute any Ollama-served model
+
+# run the harness against the local model
+npx tsx harness.ts --provider ollama
+
+# pick a different model or endpoint
+OLLAMA_MODEL=codellama:13b npx tsx harness.ts --provider ollama
+OLLAMA_HOST=http://remote-gpu:11434 OLLAMA_MODEL=llama3.1:70b \
+  npx tsx harness.ts --provider ollama
+```
+
+Headline numbers in §4 of the article were produced against `claude-sonnet-4-6`; the Ollama path is reproducibility infrastructure for **cross-model replication** (§5.3 future work), not the source of the §4 numbers themselves.
 
 Results are written to `results.json` at the end of every harness run.
 

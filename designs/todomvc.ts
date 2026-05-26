@@ -6,7 +6,6 @@
 // artifact would have, so the enrichment stage has implicit constraints to
 // surface. A richer Figma export would make the baseline easier.
 //
-// MIT License.
 
 import { DesignArtifact } from '../types';
 

@@ -3,7 +3,6 @@
 // This file is part of the companion code for the article
 // "Specification Enrichment: Using LLMs to Surface Implicit
 // Constraints in Design-to-Test Pipelines."
-// MIT License.
 
 /**
  * A design artifact, as input to the pipeline. Intentionally minimal —

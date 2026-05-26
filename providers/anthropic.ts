@@ -4,7 +4,6 @@
 // `claude -p` via a subprocess, which authenticates via the user's existing
 // Claude OAuth session. No API key is read or required.
 //
-// MIT License.
 
 import { spawn } from 'node:child_process';
 import { ModelProvider, GenerateOptions } from './types';

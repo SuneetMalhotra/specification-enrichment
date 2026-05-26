@@ -26,7 +26,6 @@
 // Usage:
 //   npx tsx harness_visitor_kiosk.ts
 //
-// MIT License.
 
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';

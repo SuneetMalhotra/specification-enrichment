@@ -1,0 +1,37 @@
+=== Predicate->Merge Round-Trip Demonstration (§3.2) ===
+
+--- Q1 (priority=low) ---
+  Question:           What is the maximum number of todo items the list should hold before pagination or scrolling kicks in?
+  Model assumption:   No explicit upper bound; the list should remain usable up to several hundred items.
+  Reviewer answer:    No explicit upper bound; the list should remain usable up to several hundred items. (Confirmed; no v1 changes needed.)
+  Predicate:          materiallyChanged = false
+                      (Jaccard distance threshold = 0.30)
+  Action:             enricher.merge() promotes; downstream test plan REUSED.
+
+--- Q2 (priority=high) ---
+  Question:           Should completed items remain in the list, be hidden by default, or be moved to a separate "completed" section?
+  Model assumption:   Completed items remain in the list with a strikethrough; the user clears them via the "Clear completed" button.
+  Reviewer answer:    Completed items must be moved to a separate "Done" section that is collapsed by default. The user expands it to review or restore items.
+  Predicate:          materiallyChanged = true
+                      (Jaccard distance threshold = 0.30)
+  Action:             enricher.merge() promotes + downstream test plan REGENERATES.
+
+--- Q3 (priority=high) ---
+  Question:           When the user enters a duplicate todo (same text as an existing item), should the application warn, deduplicate, or accept silently?
+  Model assumption:   Accept duplicates silently; duplicates are allowed.
+  Reviewer answer:    Duplicates must trigger an inline warning under the input field and require a confirmation tap before submission.
+  Predicate:          materiallyChanged = true
+                      (Jaccard distance threshold = 0.30)
+  Action:             enricher.merge() promotes + downstream test plan REGENERATES.
+
+=== Summary ===
+  Pre-merge constraints:                1
+  Post-merge constraints:               4
+  Reviewer answers triggering regen:    2 of 3
+  Regenerated constraint ids:           [Q2, Q3]
+  Pre-merge test plan size (simulated): 1
+  Post-merge test plan size (simulated):6
+  Downstream artifact CHANGED:          YES
+
+Demonstration complete. Production: replace JaccardMergePredicate with
+CosineSimilarityMergePredicate + an injected embed function (similarity.ts:30).

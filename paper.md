@@ -14,7 +14,7 @@
 
 ## Abstract
 
-**Specification Enrichment** is a pipeline-mouth pattern that treats coverage gaps in AI-augmented design-to-test pipelines as an *input-completeness* problem: one LLM stage enumerates the implicit constraints (persistence, accessibility, resilience, internationalization) a design assumes but does not state, routes high-confidence ones into downstream generation, and emits low-confidence ones as a non-blocking questionnaire to the design owner. An N=2 pilot — the public TodoMVC reference application and a study-authored visitor-kiosk design — reports the contribution as **structural rather than per-category**: across three prospectively pinned seeds on the visitor-kiosk from tagged commit `v2-precommit` (SHA `0d51e71`), the enriched pipeline produces a coverage expansion in some implicit-failure-mode category that no count-matched or category-diversity-instructed baseline reaches (3/3 seeds), with two-ordering judge agreement 81.3%–100% across all reported configurations (worst values on the contribution-bearing Enriched-16 configuration: 87.5% on TodoMVC, 81.3% on visitor-kiosk seed 2). The category itself shifts seed-to-seed. The contribution is the pipeline structure, not any particular model or prompt template. Reference implementation: https://github.com/SuneetMalhotra/specification-enrichment.
+**Specification Enrichment** is a pipeline-mouth pattern that treats coverage gaps in AI-augmented design-to-test pipelines as an *input-completeness* problem: one LLM stage enumerates the implicit constraints (persistence, accessibility, resilience, internationalization) a design assumes but does not state, routes high-confidence ones into downstream generation, and emits low-confidence ones as a non-blocking questionnaire to the design owner. An N=2 pilot — the public TodoMVC reference application and a study-authored visitor-kiosk design — reports the contribution as **structural rather than per-category**: across three prospectively pinned seeds on the visitor-kiosk from tagged commit `v2-precommit` (SHA `0d51e71`) — note: the visitor-kiosk seeds were pinned prospectively from that tag, while the TodoMVC seeds in §4.3 are retrospective and that result is reported as a best-of-three illustration, not the primary contribution test (see §4.1) — the enriched pipeline produces a coverage expansion in some implicit-failure-mode category that no count-matched or category-diversity-instructed baseline reaches (3/3 seeds), with two-ordering judge agreement 81.3%–100% across all reported configurations (worst values on the contribution-bearing Enriched-16 configuration: 87.5% on TodoMVC, 81.3% on visitor-kiosk seed 2). The category itself shifts seed-to-seed. The contribution is the pipeline structure, not any particular model or prompt template. Reference implementation: https://github.com/SuneetMalhotra/specification-enrichment.
 
 ---
 
@@ -74,7 +74,7 @@ flowchart TD
 
 ### 2.3 The meta-prompt
 
-The reference implementation ships three meta-prompt variants — default, terse, and chain-of-thought — all in `companion-code/meta-prompt.ts`. Routing is binary at the silent-incorporation threshold (default 0.7): constraints at or above the threshold are silently incorporated into downstream generation; constraints below it route to the review questionnaire. The meta-prompt additionally asks the model to label each surfaced constraint with one of three confidence tiers — high (≥ 0.7) for what the design clearly assumes, medium (0.4–0.7) for what is typical for the design category, low (< 0.4) for what genuinely requires designer review — but these tiers are metadata for adopter inspection and audit, not routing destinations: both medium and low constraints route to the questionnaire, each carrying its own `questionForm` field, alongside an id, description, justification, and category. The chain-of-thought variant adds explicit reasoning steps before emitting JSON; the terse variant compresses the same schema for cost-sensitive deployments.
+The reference implementation ships three meta-prompt variants — default, terse, and chain-of-thought — all in `meta-prompt.ts` (at the repository root; the historical `companion-code/` prefix in earlier drafts referred to a since-flattened repository layout). Routing is binary at the silent-incorporation threshold (default 0.7): constraints at or above the threshold are silently incorporated into downstream generation; constraints below it route to the review questionnaire. The meta-prompt additionally asks the model to label each surfaced constraint with one of three confidence tiers — high (≥ 0.7) for what the design clearly assumes, medium (0.4–0.7) for what is typical for the design category, low (< 0.4) for what genuinely requires designer review — but these tiers are metadata for adopter inspection and audit, not routing destinations: both medium and low constraints route to the questionnaire, each carrying its own `questionForm` field, alongside an id, description, justification, and category. The chain-of-thought variant adds explicit reasoning steps before emitting JSON; the terse variant compresses the same schema for cost-sensitive deployments.
 
 ### 2.4 Relationship to prior work
 
@@ -102,21 +102,21 @@ Each enriched constraint carries a model-reported confidence score. The threshol
 
 ### 3.2 Merge predicate
 
-`enricher.merge` triggers regeneration when cosine similarity of pre/post enrichment-text embeddings falls below default τ = 0.85; the predicate is uncalibrated in this paper because §4 does not exercise the reviewer round-trip. The Jaccard fallback in `similarity.ts`, the τ sensitivity sweep, and the full predicate documentation are in the companion-code README and are deferred to adoption-time tuning (§5.3).
+`enricher.merge` (`enricher.ts:103`) promotes reviewer-answered constraints to confirmed status (confidence 1.0) and removes them from the questionnaire queue; it does **not** itself decide whether downstream artifacts should be regenerated. The material-change predicate the pipeline would consult to make that decision is implemented separately in `similarity.ts` as `CosineSimilarityMergePredicate` (cosine similarity over sentence embeddings, default τ = 0.85, requires an injected `embed` function — `similarity.ts:31`) with a `JaccardMergePredicate` fallback (token-level, default τ = 0.30 distance — `similarity.ts:68`). The predicate-to-merge wiring is not exercised in §4 because the reviewer round-trip is not exercised; this is the priority §5.3 follow-up. The §4 numbers therefore depend on enrichment and generation but not on the merge predicate. The wiring is straightforward (call the predicate per constraint before invoking `enricher.merge`, regenerate iff the predicate returns true) and is documented in the README; adoption-time τ tuning is also deferred to §5.3.
 
 ### 3.3 LLM provider backends
 
-The `providers/` abstraction implements a single `ModelProvider` interface (`generate(system, user, responseFormat, temperature) → Promise<string>`). Three concrete adapters are live and exercised end-to-end (stub, anthropic, ollama); two (openai, gemini) are interface stubs whose `generate()` methods throw on invocation, awaiting an HTTPS implementation against the documented contract. The §4 numbers were produced via the `anthropic` path; the §5.3 cross-model replication experiment is the use case the two stubs are scaffolded for. Backend selection is a single CLI flag (`--provider <name>`) with optional `OLLAMA_MODEL` / `MODEL` environment variables.
+The `providers/` abstraction implements a single `ModelProvider` interface (`generate(system, user, responseFormat, temperature) → Promise<string>`). Three concrete adapters are live and exercised end-to-end (stub, anthropic, ollama); two (openai, gemini) are interface stubs whose `generate()` methods throw on invocation, awaiting an HTTPS implementation against the documented contract. The §4 numbers were produced via the `anthropic` path; the §5.3 cross-model comparison experiment is the use case the two stubs are scaffolded for. Backend selection is a single CLI flag (`--provider <name>`) with optional `OLLAMA_MODEL` / `MODEL` environment variables.
 
 | Backend | Status | Endpoint | Weights | Default model | Credential | Use case |
 |---|---|---|---|---:|---|---|
 | `stub` | **live** | in-process | n/a | n/a | none | Deterministic offline reproduction; CI; demos without network |
 | `anthropic` | **live** | `claude -p` subprocess (OAuth) | hosted | `claude-sonnet-4-6` | Claude OAuth session | §4 headline numbers; high-quality reasoning |
 | `ollama` | **live** | `http://localhost:11434/api/chat` | **open** (local) | `llama3.2` | none | Open-weights replication; air-gapped deployment; fine-tuned variants |
-| `openai` | stub (throws) | Chat Completions API | hosted | `gpt-4.1` | `OPENAI_API_KEY` | Cross-model replication of §4 once HTTPS implementation lands (§5.3) |
-| `gemini` | stub (throws) | Generative Language API | hosted | `gemini-2.5-pro` | `GOOGLE_API_KEY` | Cross-model replication of §4 once HTTPS implementation lands (§5.3) |
+| `openai` | stub (throws) | Chat Completions API | hosted | `gpt-4.1` | `OPENAI_API_KEY` | Cross-model comparison of §4 once HTTPS implementation lands (§5.3) |
+| `gemini` | stub (throws) | Generative Language API | hosted | `gemini-2.5-pro` | `GOOGLE_API_KEY` | Cross-model comparison of §4 once HTTPS implementation lands (§5.3) |
 
-The `ollama` adapter routes generation through a locally running [Ollama](https://ollama.com) server and accepts any model Ollama can serve (Llama 3.x, Mistral, Qwen 2.5-Coder, CodeLlama, or a locally fine-tuned variant). It is the open-weights complement to the live hosted path (`anthropic`) and follows the open-weights LLM-testing pattern that Rehan et al. [2] demonstrated for fine-tuned Llama-2-7b on focal-method-to-test-case generation (`https://github.com/Shaheer-Rehan/Llama-2-for-Software-Testing`). The relevant adoption tradeoffs: hosted providers have stronger calibration and reasoning depth at per-call cost and outbound data transfer; the local-weights path eliminates both at the cost of fine-tuning effort or larger-model latency. The §5.3 cross-model replication experiment is designed to exercise the abstraction across all live backends (currently `anthropic` and `ollama`); extending to OpenAI and Gemini requires filling in their stub adapters against the documented HTTPS contracts first.
+The `ollama` adapter routes generation through a locally running [Ollama](https://ollama.com) server and accepts any model Ollama can serve (Llama 3.x, Mistral, Qwen 2.5-Coder, CodeLlama, or a locally fine-tuned variant). It is the open-weights complement to the live hosted path (`anthropic`) and follows the open-weights LLM-testing pattern that Rehan et al. [2] demonstrated for fine-tuned Llama-2-7b on focal-method-to-test-case generation (`https://github.com/Shaheer-Rehan/Llama-2-for-Software-Testing`). The relevant adoption tradeoffs: hosted providers have stronger calibration and reasoning depth at per-call cost and outbound data transfer; the local-weights path eliminates both at the cost of fine-tuning effort or larger-model latency. The §5.3 cross-model comparison experiment is designed to exercise the abstraction across all live backends (currently `anthropic` and `ollama`); extending to OpenAI and Gemini requires filling in their stub adapters against the documented HTTPS contracts first.
 
 ---
 
@@ -130,7 +130,7 @@ The evaluation uses the public TodoMVC design [7]. Two scope limits matter for w
 
 The pattern's premise is that the explicit design under-specifies what a shipping test plan should cover. The natural test-quality operationalization is therefore the **QA-reviewer criterion**: *"would a competent QA engineer add this test case to the shipping test plan?"* A **spec-strict** parallel pass (*"does this test trace to a line in the explicit design?"*) is also run; both result sets are in the repository.
 
-Four configurations are reported. **Baseline-12**: design → 12 test cases. **Baseline-16**: design → 16 test cases (count-matched). **Baseline-16-Enhanced**: design → 16 test cases generated with an added category-diversity instruction (at least one accessibility, persistence, internationalization, and error-handling test). **Enriched-16**: design → enrichment → enriched spec → 16 test cases. All four use `claude-sonnet-4-6` at temperature 0. All harness runs use the default meta-prompt variant (`META_PROMPT` in `companion-code/meta-prompt.ts`); the terse and chain-of-thought variants described in §2.3 are implemented but not evaluated in this study.
+Four configurations are reported. **Baseline-12**: design → 12 test cases. **Baseline-16**: design → 16 test cases (count-matched). **Baseline-16-Enhanced**: design → 16 test cases generated with an added category-diversity instruction (at least one accessibility, persistence, internationalization, and error-handling test). **Enriched-16**: design → enrichment → enriched spec → 16 test cases. All four use `claude-sonnet-4-6` at temperature 0. All harness runs use the default meta-prompt variant (`META_PROMPT` in `meta-prompt.ts` (at the repository root; the historical `companion-code/` prefix in earlier drafts referred to a since-flattened repository layout)); the terse and chain-of-thought variants described in §2.3 are implemented but not evaluated in this study.
 
 The LLM-as-judge evaluator uses a three-bucket rubric: *accepted-as-is* (ready for the shipping test plan), *minor-edit* (useful, small textual fix), *major-rework* (not testable, contradicts the design, or has no plausible relationship to user-facing behavior). To control for option-ordering bias, each test case is graded twice with the rubric re-ordered; disagreements are aggregated conservatively. The judge is the same model family that wrote the test cases — a known limitation discussed in §5.1.
 
@@ -163,18 +163,31 @@ Accessibility has the highest individual confidence (C8 = 0.88) on this design a
 
 The enrichment stage produced 15 implicit constraints. Nine met the 0.7 threshold and were silently incorporated; six became review questions.
 
-**Test cases by category** (the primary empirical result; min–max across three independent runs at temperature 0 for the N=16 configurations, with median in parentheses; Baseline-12 was run once and is reported as a single point; the "Enriched-16 (v2-pre re-run)" column is a single run (N=1) presented for direct comparison against the multi-seed range, not as a seed range):
+**Test cases by category** (the primary empirical result; min–max across three independent runs at temperature 0 for the N=16 configurations, with median in parentheses; Baseline-12 was run once and is reported as a single point):
 
-| Category | Baseline-12 (single) | Baseline-16 | Enhanced | Enriched-16 (3-seed) | Enriched-16 (v2-pre re-run; N=1) |
-|---|---:|---:|---:|---:|---:|
-| happy-path | 9 | 9–12 (11) | 8–9 (9) | 6 (6) | 6 |
-| edge-case | 2 | 2–4 (3) | 2–3 (3) | **5–7 (7)** | 3 |
-| error-handling | 1 | 1–2 (1) | 1–3 (2) | 1–2 (2) | 0 |
-| accessibility | 0 | 0–1 (0) | 1 (1) | 0–1 (1) | 0 |
-| persistence | 0 | 0 (0) | 1 (1) | 0–1 (0) | 1 |
-| other | 0 | 0–1 (1) | 0–1 (1) | 0–2 (1) | 6 |
+| Category | Baseline-12 (single) | Baseline-16 | Enhanced | Enriched-16 (3-seed) |
+|---|---:|---:|---:|---:|
+| happy-path | 9 | 9–12 (11) | 8–9 (9) | 6 (6) |
+| edge-case | 2 | 2–4 (3) | 2–3 (3) | **5–7 (7)** |
+| error-handling | 1 | 1–2 (1) | 1–3 (2) | 1–2 (2) |
+| accessibility | 0 | 0–1 (0) | 1 (1) | 0–1 (1) |
+| persistence | 0 | 0 (0) | 1 (1) | 0–1 (0) |
+| other | 0 | 0–1 (1) | 0–1 (1) | 0–2 (1) |
 
-The complete per-seed numbers are in `results/results_multi_seed.json`. The Enriched-16 v2-pre re-run "other" row at 6 is larger than any single-category number elsewhere in the table; inspection of that JSON shows the generator assigned `category: "other"` to tests whose intended category label the model did not commit to (multi-aspect tests crossing happy-path and edge-case behavior), not to tests outside the documented taxonomy. The taxonomy itself is fixed; the assignment confidence is what varies, which is the §5.1 model-assigned-categories threat applied at a single configuration.
+The complete per-seed numbers are in `results/results_multi_seed.json`.
+
+*Supplementary: single-run v2-precommit reproduction of the Enriched-16 configuration on TodoMVC. The values differ from the §4.3 multi-seed range because the multi-seed treatment was retrospective (see §4.1); this single-seed prospective re-run is what robustly replicates.*
+
+| Category | Enriched-16 (v2-pre re-run; N=1) |
+|---|---:|
+| happy-path | 6 |
+| edge-case | 3 |
+| error-handling | 0 |
+| accessibility | 0 |
+| persistence | 1 |
+| other | 6 |
+
+The v2-pre re-run "other" row at 6 is larger than any single-category number elsewhere in the primary table; inspection of `results/results_v2precommit_main.json` shows the generator assigned `category: "other"` to tests whose intended category label the model did not commit to (multi-aspect tests crossing happy-path and edge-case behavior), not to tests outside the documented taxonomy. The taxonomy itself is fixed; the assignment confidence is what varies, which is the §5.1 model-assigned-categories threat applied at a single configuration.
 
 The four configurations are compared visually in Figure 2.
 
@@ -194,6 +207,8 @@ Two caveats bound the TodoMVC edge-case finding. First, TodoMVC is a long-studie
 
 This sweep is a separate experiment from the §4.3 primary evaluation: it was generated with an independent enrichment run (enrichment-run-B), producing a different 15-constraint set from the §4.3 generator input (enrichment-run-A). Reconciliation against §4.3 will therefore not be exact — the τ=0.7 row reports edge-case=4, while §4.3 reports a median of 7 at the same threshold. The discrepancy source is not non-determinism at temperature 0 — §4.5 shows the enrichment stage is essentially deterministic on the visitor-kiosk. The most plausible mechanism is the TodoMVC design's higher implicit-constraint density relative to the visitor-kiosk, exposing the enrichment stage to a larger combinatorial space of plausible-but-not-required constraints; a third enrichment run on a design intermediate in density would test the hypothesis. Both enrichment runs are committed in the companion repository.
 
+*The following table is a sensitivity illustration generated from a separate enrichment run (enrichment-run-B); the magnitudes are not directly comparable to the §4.3 primary results.*
+
 With that calibration stated, a sweep across thresholds {0.5, 0.6, 0.7, 0.8, 0.9} regenerates test cases at each silent-incorporation threshold:
 
 | Threshold | Silent | Questions | happy | edge | error | a11y | persistence | other |
@@ -204,7 +219,7 @@ With that calibration stated, a sweep across thresholds {0.5, 0.6, 0.7, 0.8, 0.9
 | 0.8 | 8 | 7 | 6 | 5 | 2 | 1 | 0 | 2 |
 | 0.9 | 4 | 11 | 7 | 7 | 1 | 0 | 1 | 0 |
 
-(N=16 test cases per row.)
+(N=16 test cases per row. Generated from enrichment-run-B (see §4.4 calibration note); not directly comparable to §4.3 enrichment-run-A results. Both runs are committed in the companion repository under `results/`.)
 
 Accessibility stability across τ = 0.6–0.8 holds under both enrichment runs; the τ = 0.5 crowding-out at zero accessibility is specific to enrichment-run-B (the table above) and does **not** reproduce under the v2-precommit re-run (`results/results_v2precommit_threshold_sweep.json` holds accessibility at 1 across the full τ ∈ {0.5, 0.6, 0.7, 0.8, 0.9} sweep). The §4.4 table reports enrichment-run-B numbers because the v2-precommit re-run produced a third enrichment with a different constraint set; pairing the v2-precommit τ-sweep against the §4.3 primary (enrichment-run-A) would compound the inter-enrichment-run variance this section already warns about. Both sweep JSONs are in `results/` for direct comparison.
 
@@ -248,6 +263,12 @@ The visitor-kiosk design was authored by the author for this study and was not p
 
 **Internationalization null result.** Internationalization is 0/0/0 across all three seeds *and* all three configurations including the Enhanced baseline, which explicitly instructed for i18n coverage (a Unicode-rendering test appears under `other` in seed 1's enhanced configuration only). The pattern does not help where the design itself carries no i18n signals — surfaced as a named adoption boundary in §5.1.
 
+> **What this paper does NOT claim**
+>
+> - It does not claim that any particular implicit-failure-mode category (edge-case, persistence, accessibility) systematically benefits from the enrichment pattern; the category of expansion is itself seed-sensitive (§4.5, §5.1).
+> - It does not claim that the pattern's reviewer round-trip channel has been empirically validated; the in-harness runs exercise the enrichment-to-generation path only (§2.2, §4.1).
+> - It does not claim cross-model generalization; absolute numbers are reported for `claude-sonnet-4-6` only (§5.1, §5.3).
+
 ## 5. Threats to validity, scope, and adoption
 
 ### 5.1 Threats to validity
@@ -280,7 +301,7 @@ In rough priority order:
 - **Human label-validation of model-assigned categories** on the 60 test cases used in §4. Required before the category-coverage tables can be cited as validated; the `audit/protocol.md` rater packet is shipped with this article.
 - **Prospective multi-seed TodoMVC re-run** with seeds pinned before any harness invocation. This is the unmet evidence requirement for any TodoMVC per-category claim — the v18 retrospective multi-seed is compromised (§4.1) and the single pre-commit re-run does not reproduce the v18 dominance.
 - **Reviewer round-trip end-to-end trace** exercising the §2.2 questionnaire channel and the §3.2 merge predicate against live reviewer answers. The pattern's second output channel is unevaluated in this paper.
-- **Cross-application + cross-model replication.** Three to five more designs across the `providers/` abstraction (Anthropic, OpenAI, Gemini). Generality of the structural finding is the most consequential extension.
+- **Cross-application + cross-model comparison.** Three to five more designs across the `providers/` abstraction (Anthropic, OpenAI, Gemini). Generality of the structural finding is the most consequential extension.
 - **Generator-side constraint-to-test traceability + τ sweep.** Tests the §4.4 crowding-out hypothesis and gives adopters a τ-vs-reviewer-load curve. The architecture should also be exercised inside agentic-SDLC frameworks coordinating multiple LLM steps over shared artifacts [17, 18].
 
 ---
@@ -299,7 +320,9 @@ The author thanks the open-source TodoMVC community for the public reference des
 
 ## Author biography
 
-Suneet Malhotra is Senior Manager, Test Engineering at Motorola Solutions, with over 20 years leading quality engineering on consumer-scale mobile and web platforms. He holds an M.S. in Computer Science from the University of Southern California, Los Angeles. More at suneetmalhotra.com.
+Suneet Malhotra is Senior Manager, Test Engineering at Motorola Solutions, with over 20 years leading quality engineering on consumer-scale mobile and web platforms. He holds an M.S. in Computer Science from the University of Southern California, Los Angeles. His research interests are AI-augmented test automation and software quality engineering. More at suneetmalhotra.com.
+
+**Author contribution.** S. Malhotra conceived the pattern, implemented the reference code, ran all empirical evaluations, and wrote the manuscript.
 
 ---
 

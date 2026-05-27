@@ -2,7 +2,7 @@
   "name": "specification-enrichment",
   "version": "1.0.0",
   "description": "Reference implementation for the Specification Enrichment pipeline pattern (Malhotra, 2026). Companion code to the IEEE Software Practice column article.",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "author": "Suneet Malhotra",
   "repository": {
     "type": "git",

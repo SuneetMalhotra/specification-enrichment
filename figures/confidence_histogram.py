@@ -70,13 +70,19 @@ def main() -> int:
     bars = ax.bar(ids, vals, color=colors, edgecolor="black", linewidth=0.5)
     ax.axvline(x=-0.5, color="none")  # placeholder for clean axis
     ax.axhline(y=0.7, color="black", linestyle="--", linewidth=1.0)
+    # tau=0.7 annotation anchored on the LEFT (at the y-axis edge of the plot,
+    # in axes coordinates), with a white background, so it cannot collide with
+    # any bar (per v23 review fix — previous right-edge placement clipped C15
+    # and overprinted the title).
     ax.text(
-        len(ids) - 0.5,
-        0.71,
+        0.005,
+        0.71 / 1.05,
         "tau = 0.7 (silent-incorporation threshold)",
-        ha="right",
+        ha="left",
         va="bottom",
         fontsize=8,
+        transform=ax.transAxes,
+        bbox=dict(facecolor="white", edgecolor="none", pad=1.0),
     )
 
     ax.set_ylim(0, 1.05)

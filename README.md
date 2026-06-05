@@ -105,6 +105,35 @@ The harness is deterministic at temperature 0, but model output is not byte-stab
 
 `results.json` contains every generated test case, every grader verdict (both orderings), and the conservative aggregate. We publish the raw grades alongside the summary so reviewers can audit the LLM-judge.
 
+### Reproducing Table 1 (visitor-kiosk — the primary result)
+
+Table 1 reports per-category test counts on the study-authored visitor-kiosk design across three prospectively-pinned seeds. These are the contribution-bearing numbers (TodoMVC is a sanity check only). The evaluated state is tagged **`v1.0.0`**.
+
+```bash
+git checkout v1.0.0
+npm install
+npm run harness:visitor_kiosk      # regenerates the three-seed kiosk run
+```
+
+The committed per-seed outputs behind Table 1 live in `results/`:
+
+| Table 1 seed | File |
+|---|---|
+| seed 1 (s1) | `results/results_v2precommit_visitor_kiosk.json` |
+| seed 2 (s2) | `results/results_v2precommit_visitor_kiosk_seed2.json` |
+| seed 3 (s3) | `results/results_v2precommit_visitor_kiosk_seed3.json` |
+
+Each file contains every generated test case, its generator-assigned category, and both judge orderings, so the per-category counts in Table 1 can be recomputed directly.
+
+### Human label-validation packet (`audit/`)
+
+`audit/packet/` holds the blinded spot-audit that validates the LLM judge's verdicts against independent human raters: `test_cases_blinded.csv` (cases with no pipeline or category labels), `rater_template.csv` (the sheet each rater fills), `README_FOR_RATERS.md` + `rater_instructions.md`, the author-only `test_cases_KEY.csv`, and `analysis.py`, which computes human-vs-judge agreement and inter-rater agreement (Cohen's κ / Krippendorff's α) from the returned sheets. Run after rater sheets are collected:
+
+```bash
+python3 audit/packet/analysis.py --rater1 rater_A.csv --rater2 rater_B.csv \
+  --key audit/packet/test_cases_KEY.csv --out audit/analysis_results.md
+```
+
 ---
 
 ## Methodology notes
@@ -121,8 +150,7 @@ The harness is deterministic at temperature 0, but model output is not byte-stab
 ```bibtex
 @article{Malhotra2026SpecEnrichment,
   author  = {Malhotra, Suneet},
-  title   = {Specification Enrichment: Using {LLMs} to Surface Implicit
-             Constraints in Design-to-Test Pipelines},
+  title   = {Specification Enrichment: Testing What the Design Forgot to Say},
   journal = {IEEE Software},
   year    = {2026},
   note    = {Companion code: https://github.com/SuneetMalhotra/specification-enrichment}

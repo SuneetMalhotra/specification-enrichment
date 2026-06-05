@@ -2,9 +2,9 @@
 
 Reference implementation for the **Specification Enrichment** pipeline pattern.
 
-Companion code for the IEEE Software Practice column article:
+Companion code for the forthcoming IEEE Software article:
 
-> Malhotra, S. "Specification Enrichment: Using LLMs to Surface Implicit Constraints in Design-to-Test Pipelines." 2026.
+> Malhotra, S. "Specification Enrichment: Testing What the Design Forgot to Say." IEEE Software (under submission), 2026.
 
 ---
 

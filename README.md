@@ -165,4 +165,6 @@ The author is Senior Manager, Test Engineering at Motorola Solutions. This work,
 
 ## License
 
-All rights reserved. © 2026 Suneet Malhotra. This repository is published for review and reproducibility of the companion article; no license is granted for redistribution or derivative works.
+- **Code** (`src/`, `harness*.ts`, scripts, configuration) is licensed under the **MIT License** — see [LICENSE](LICENSE).
+- **Data files** in [`results/`](results/) and the kiosk design are licensed under **Creative Commons Attribution 4.0 International (CC-BY 4.0)** — see [LICENSE-DATA](LICENSE-DATA).
+- © 2026 Suneet Malhotra.
